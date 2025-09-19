@@ -169,42 +169,22 @@ Route::middleware(['auth:sanctum', AdminMiddleware::class])
     Route::post('notifications/send',         [NotificationController::class, 'sendNotification']);
     Route::get('notifications/statistics',    [NotificationController::class, 'statistics']);
 });
-Route::middleware(['auth:sanctum'])
-    ->prefix('lessons')
-    ->group(function () {
-        Route::get('{lesson}/video/status', [LessonVideoController::class, 'getProcessingStatus'])
-            ->name('lesson.video.status');
-        Route::get('{lesson}/stream', [LessonVideoController::class, 'streamVideo'])
-            ->name('lesson.stream');
-        Route::post('{lesson}/video/refresh-token', [LessonVideoController::class, 'refreshVideoToken'])
-            ->name('lesson.video.refresh-token');
-    });
-/*
-|--------------------------------------------------------------------------
-| Admin Video Management Routes
-|--------------------------------------------------------------------------
-*/
-Route::middleware(['auth:sanctum', AdminMiddleware::class])
-    ->prefix('admin/lessons')
-    ->group(function () {
-        Route::post('{lesson}/video/upload', [LessonVideoController::class, 'upload'])
-            ->name('admin.lesson.video.upload');
-        Route::delete('{lesson}/video', [LessonVideoController::class, 'deleteVideo'])
-            ->name('admin.lesson.video.delete');
-        Route::get('{lesson}/video/status', [LessonVideoController::class, 'getProcessingStatus'])
-            ->name('admin.lesson.video.status');
-    });
-
-
-// Video routes - Admin only
-Route::middleware(['auth:sanctum', 'admin'])->group(function () {
-    Route::post('/lessons/{lesson}/video/upload', [LessonVideoController::class, 'upload'])->name('lessons.video.upload');
-    Route::delete('/lessons/{lesson}/video', [LessonVideoController::class, 'deleteVideo'])->name('lessons.video.delete');
-});
-
 // Video streaming and status - Authenticated users
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/lessons/{lesson}/video/status', [LessonVideoController::class, 'getProcessingStatus'])->name('lessons.video.status');
     Route::get('/lessons/{lesson}/stream', [LessonVideoController::class, 'streamVideo'])->name('api.lessons.stream');
     Route::post('/lessons/{lesson}/video/refresh-token', [LessonVideoController::class, 'refreshVideoToken'])->name('lessons.video.refresh-token');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Admin Video Management Routes
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth:sanctum', AdminMiddleware::class])
+    ->prefix('admin')
+    ->group(function () {
+        Route::post('/lessons/{lesson}/video/upload', [LessonVideoController::class, 'upload'])->name('admin.lesson.video.upload');
+        Route::delete('/lessons/{lesson}/video', [LessonVideoController::class, 'deleteVideo'])->name('admin.lesson.video.delete');
+        Route::get('/lessons/{lesson}/video/status', [LessonVideoController::class, 'getProcessingStatus'])->name('admin.lesson.video.status');
+    });

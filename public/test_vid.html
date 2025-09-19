@@ -215,7 +215,7 @@
         <!-- قسم الاختبار السريع -->
         <div class="section">
             <h2>⚡ اختبار سريع للفيديو</h2>
-            
+
             <div class="form-group">
                 <label for="authToken">🔑 Auth Token:</label>
                 <textarea id="authToken" rows="3" placeholder="ضع الـ Auth Token هنا..."></textarea>
@@ -318,7 +318,7 @@
                 // 1. فحص حالة الفيديو
                 showStatus('📊 فحص حالة الفيديو...', 'info');
                 const videoStatus = await checkVideoStatus();
-                
+
                 if (!videoStatus.success) {
                     showStatus(`❌ فشل في فحص حالة الفيديو: ${videoStatus.error}`, 'error');
                     return;
@@ -433,131 +433,64 @@ function displayVideoInfo(videoData) {
     videoInfoSection.style.display = 'block';
 }
 
-            const videoInfoSection = document.getElementById('videoInfo');
-            const videoDetailsDiv = document.getElementById('videoDetails');
-
-            let infoHtml = `
-                <div class="video-info">
-                    <h3>📋 تفاصيل الفيديو:</h3>
-                    <p><strong>🔢 رقم الدرس:</strong> ${videoData.lesson_id}</p>
-                    <p><strong>⚡ الحالة:</strong> ${getStatusInArabic(videoData.status)}</p>
-                    <p><strong>📹 يوجد فيديو:</strong> ${videoData.has_video ? 'نعم ✅' : 'لا ❌'}</p>
-                    <p><strong>🔒 محمي:</strong> ${videoData.is_protected ? 'نعم 🔐' : 'لا 🔓'}</p>
-            `;
-
-            if (videoData.progress !== undefined) {
-                infoHtml += `
-                    <p><strong>📊 التقدم:</strong> ${videoData.progress}%</p>
-                    <div style="background: #e0e0e0; border-radius: 10px; padding: 3px;">
-                        <div style="background: linear-gradient(90deg, #667eea, #764ba2); height: 20px; border-radius: 7px; width: ${videoData.progress}%; transition: width 0.3s;"></div>
-                    </div>
-                `;
-            }
-
-            if (videoData.video_info) {
-                infoHtml += `
-                    <h4>🎬 معلومات إضافية:</h4>
-                    <p><strong>⏱️ المدة:</strong> ${videoData.video_info.duration || 'غير متوفر'}</p>
-                    <p><strong>💾 الحجم:</strong> ${videoData.video_info.size || 'غير متوفر'}</p>
-                `;
-            }
-
-            if (videoData.stream_url) {
-                infoHtml += `
-                    <h4>🔗 رابط البث:</h4>
-                    <div class="api-url">${getApiUrl()}${videoData.stream_url}</div>
-                `;
-                currentVideoUrl = `${getApiUrl()}${videoData.stream_url}`;
-                
-                // استخراج الـ token من الرابط
-                const url = new URL(`${getApiUrl()}${videoData.stream_url}`);
-                const token = url.searchParams.get('token');
-                if (token) {
-                    currentVideoToken = token;
-                    infoHtml += `
-                        <h4>🎫 رمز الفيديو:</h4>
-                        <div class="token-display">${token}</div>
-                    `;
-                }
-            
-
-            infoHtml += '</div>';
-            videoDetailsDiv.innerHTML = infoHtml;
-            videoInfoSection.style.display = 'block';
-        }
-
-        // تحميل مشغل الفيديو
+        // دالة تحميل مشغل الفيديو
         async function loadVideoPlayer() {
-            if (!currentVideoUrl) {
-                showStatus('❌ لا يوجد رابط فيديو للتشغيل', 'error');
-                return;
-            }
-
             const videoPlayerSection = document.getElementById('videoPlayer');
             const playerContent = document.getElementById('playerContent');
 
-            const videoHtml = `
+            if (!currentVideoUrl) {
+                showStatus('❌ لا يوجد رابط فيديو متاح', 'error');
+                return;
+            }
+
+            const playerHtml = `
                 <div class="video-player">
-                    <video 
-                        id="mainVideo" 
-                        controls 
-                        controlsList="nodownload"
-                        style="width: 100%; max-width: 700px; border-radius: 8px;"
-                        poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='60'%3E%3Crect width='100' height='60' fill='%23000'/%3E%3Ctext x='50' y='35' fill='white' text-anchor='middle' font-family='Arial' font-size='12'%3ELoading...%3C/text%3E%3C/svg%3E"
-                    >
+                    <video controls preload="metadata" style="width: 100%; max-width: 700px; border-radius: 8px;">
                         <source src="${currentVideoUrl}" type="video/mp4">
-                        متصفحك لا يدعم عرض الفيديو.
+                        متصفحك لا يدعم تشغيل الفيديو.
                     </video>
-                    
-                    <div style="margin-top: 15px; color: #666;">
-                        <p>🎮 استخدم أدوات التحكم لتشغيل الفيديو</p>
-                        <div class="api-url" style="margin-top: 10px;">
-                            <strong>رابط البث:</strong> ${currentVideoUrl}
-                        </div>
-                    </div>
+                    <p style="margin-top: 10px; color: #666;">
+                        <strong>📡 حالة البث:</strong> جاري التحميل...
+                    </p>
                 </div>
             `;
 
-            playerContent.innerHTML = videoHtml;
+            playerContent.innerHTML = playerHtml;
             videoPlayerSection.style.display = 'block';
 
-            // إضافة معالجات الأحداث للفيديو
-            const video = document.getElementById('mainVideo');
-            
-            video.addEventListener('loadstart', () => {
-                showStatus('📡 بدء تحميل الفيديو...', 'info');
-            });
+            // إضافة مستمع لأحداث الفيديو
+            const video = playerContent.querySelector('video');
+            if (video) {
+                video.addEventListener('loadstart', () => {
+                    showStatus('📡 بدء تحميل الفيديو...', 'info');
+                });
 
-            video.addEventListener('loadedmetadata', () => {
-                showStatus('✅ تم تحميل البيانات الوصفية للفيديو', 'success');
-            });
+                video.addEventListener('canplay', () => {
+                    showStatus('✅ الفيديو جاهز للتشغيل', 'success');
+                });
 
-            video.addEventListener('canplay', () => {
-                showStatus('▶️ الفيديو جاهز للتشغيل!', 'success');
-            });
-
-            video.addEventListener('error', (e) => {
-                showStatus(`❌ خطأ في تشغيل الفيديو: ${e.message || 'خطأ غير معروف'}`, 'error');
-                console.error('Video error:', e);
-            });
-
-            // منع النقر بالزر الأيمن
-            video.addEventListener('contextmenu', (e) => {
-                e.preventDefault();
-                return false;
-            });
+                video.addEventListener('error', (e) => {
+                    showStatus('❌ خطأ في تحميل الفيديو', 'error');
+                    console.error('Video error:', e);
+                });
+            }
         }
 
         // دالة ترجمة حالات الفيديو
         function getStatusInArabic(status) {
             const statusMap = {
-                'null': 'غير موجود',
-                'processing': 'جاري المعالجة',
-                'ready': 'جاهز',
-                'failed': 'فشل',
-                'pending': 'في الانتظار'
+                'pending': 'في الانتظار ⏳',
+                'processing': 'قيد المعالجة 🔄',
+                'ready': 'جاهز ✅',
+                'failed': 'فشل ❌',
+                'uploaded': 'تم الرفع 📤',
+                'encoding': 'قيد التشفير 🔐'
             };
             return statusMap[status] || status;
+        }
+
+        // دالة تجديد رمز الوصول
+        function refreshVideoToken() {
         }
 
         // دالة مسح الكل
@@ -567,11 +500,11 @@ function displayVideoInfo(videoData) {
             document.getElementById('videoInfo').style.display = 'none';
             document.getElementById('videoPlayer').style.display = 'none';
             document.getElementById('statusSection').innerHTML = '';
-            
+
             currentAuthToken = '';
             currentVideoToken = '';
             currentVideoUrl = '';
-            
+
             showStatus('🗑️ تم مسح جميع البيانات', 'info');
         }
 
