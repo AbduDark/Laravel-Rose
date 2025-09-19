@@ -173,10 +173,14 @@ public function upload(Request $request, $lessonId)
     {
         try {
             /** @var User $user */
-            $user = auth()->user();
+            $user = auth('sanctum')->user();
 
             if (!$user) {
-                return $this->errorResponse('يجب تسجيل الدخول أولاً', 401);
+                return response()->json([
+                    'success' => false,
+                    'message' => 'يجب تسجيل الدخول أولاً',
+                    'error' => 'Unauthorized'
+                ], 401);
             }
 
             if (!$this->canAccessLesson($user, $lesson)) {

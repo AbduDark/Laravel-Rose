@@ -52,7 +52,7 @@ Route::middleware(['auth:sanctum'])->get('/debug/user', function () {
 */
 Route::prefix('auth')->middleware('throttle:10,1')->group(function () {
     Route::post('register',        [AuthController::class, 'register']);
-    Route::post('login',           [AuthController::class, 'login']);
+    Route::post('login',           [AuthController::class, 'login'])->name('login');
     Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
     Route::get('verify-email',     [AuthController::class, 'verifyEmail']);
     Route::post('reset-password',  [AuthController::class, 'resetPassword']);
