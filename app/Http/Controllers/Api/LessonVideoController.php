@@ -172,10 +172,22 @@ public function upload(Request $request, $lessonId)
     public function streamVideo(Request $request, Lesson $lesson)
     {
         try {
+            // Log the incoming request for debugging
+            Log::info('Video stream request received', [
+                'lesson_id' => $lesson->id,
+                'token' => $request->get('token'),
+                'user_id' => auth('sanctum')->id(),
+                'ip' => $request->ip()
+            ]);
+
             /** @var User $user */
             $user = auth('sanctum')->user();
 
             if (!$user) {
+                Log::warning('Video stream access denied - no authenticated user', [
+                    'lesson_id' => $lesson->id,
+                    'ip' => $request->ip()
+                ]);
                 return response()->json([
                     'success' => false,
                     'message' => 'يجب تسجيل الدخول أولاً',
@@ -184,10 +196,18 @@ public function upload(Request $request, $lessonId)
             }
 
             if (!$this->canAccessLesson($user, $lesson)) {
+                Log::warning('Video stream access denied - insufficient permissions', [
+                    'lesson_id' => $lesson->id,
+                    'user_id' => $user->id
+                ]);
                 return $this->errorResponse('ليس لديك صلاحية لمشاهدة هذا الدرس', 403);
             }
 
             if (!$lesson->hasVideo()) {
+                Log::warning('Video stream request for lesson without video', [
+                    'lesson_id' => $lesson->id,
+                    'user_id' => $user->id
+                ]);
                 return $this->errorResponse('الفيديو غير متوفر حالياً', 404);
             }
 
@@ -195,6 +215,11 @@ public function upload(Request $request, $lessonId)
             if ($lesson->is_video_protected && !$user->isAdmin()) {
                 $token = $request->get('token');
                 if (!$token || !$lesson->isValidVideoToken($token)) {
+                    Log::warning('Video stream access denied - invalid token', [
+                        'lesson_id' => $lesson->id,
+                        'user_id' => $user->id,
+                        'token_provided' => !empty($token)
+                    ]);
                     return $this->errorResponse('رمز الوصول غير صحيح أو منتهي الصلاحية', 403);
                 }
             }
@@ -202,7 +227,23 @@ public function upload(Request $request, $lessonId)
             $videoPath = storage_path('app/' . $lesson->video_path);
 
             if (!file_exists($videoPath)) {
+                Log::error('Video file not found', [
+                    'lesson_id' => $lesson->id,
+                    'video_path' => $lesson->video_path,
+                    'full_path' => $videoPath,
+                    'user_id' => $user->id
+                ]);
                 return $this->errorResponse('ملف الفيديو غير موجود', 404);
+            }
+
+            if (!is_readable($videoPath)) {
+                Log::error('Video file not readable', [
+                    'lesson_id' => $lesson->id,
+                    'video_path' => $videoPath,
+                    'permissions' => substr(sprintf('%o', fileperms($videoPath)), -4),
+                    'user_id' => $user->id
+                ]);
+                return $this->errorResponse('لا يمكن قراءة ملف الفيديو', 500);
             }
 
             $fileSize = filesize($videoPath);

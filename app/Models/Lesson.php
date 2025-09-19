@@ -59,7 +59,7 @@ class Lesson extends Model
     }
 
     /**
-     * Check if lesson has video
+     * Check if lesson has a video
      */
     public function hasVideo(): bool
     {
@@ -67,9 +67,25 @@ class Lesson extends Model
     }
 
     /**
-     * Generate video token for protected videos
+     * Check if video token is valid
      */
-    public function generateVideoToken(int $expiresInMinutes = 60): string
+    public function isValidVideoToken(?string $token): bool
+    {
+        if (!$token || !$this->video_token || !$this->video_token_expires_at) {
+            return false;
+        }
+
+        if ($this->video_token !== $token) {
+            return false;
+        }
+
+        return now()->isBefore($this->video_token_expires_at);
+    }
+
+    /**
+     * Generate a new video access token
+     */
+    public function generateVideoToken(int $expiresInMinutes = 120): string
     {
         $token = Str::random(64);
 
@@ -82,36 +98,22 @@ class Lesson extends Model
     }
 
     /**
-     * Validate video token
+     * Get video stream URL with token
      */
-    public function isValidVideoToken(string $token): bool
-    {
-        if (!$this->is_video_protected) {
-            return true;
-        }
-
-        return $this->video_token === $token &&
-               $this->video_token_expires_at &&
-               $this->video_token_expires_at->isFuture();
-    }
-
-    /**
-     * Get video stream URL
-     */
-    public function getVideoStreamUrl(): ?string
+    public function getVideoStreamUrl(): string
     {
         if (!$this->hasVideo()) {
-            return null;
+            return '';
         }
 
-        if (!$this->is_video_protected) {
-            return url("/api/lessons/{$this->id}/stream");
+        $baseUrl = route('api.lessons.stream', ['lesson' => $this->id]);
+
+        if ($this->is_video_protected) {
+            $token = $this->video_token ?: $this->generateVideoToken();
+            return $baseUrl . '?token=' . $token;
         }
 
-        // إنشاء رمز حماية جديد صالح لمدة ساعة
-        $token = $this->generateVideoToken(60);
-
-        return url("/api/lessons/{$this->id}/stream?token={$token}");
+        return $baseUrl;
     }
 
     /**

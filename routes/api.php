@@ -45,6 +45,8 @@ Route::middleware(['auth:sanctum'])->get('/debug/user', function () {
     ]);
 });
 
+// Debug route for video issues - remove in production
+
 /*
 |--------------------------------------------------------------------------
 | Public Routes
@@ -175,6 +177,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('lessons/{lesson}/stream', [LessonVideoController::class, 'streamVideo'])->name('api.lessons.stream');
     Route::post('lessons/{lesson}/video/refresh-token', [LessonVideoController::class, 'refreshVideoToken'])->name('lessons.video.refresh-token');
 });
+
+// Alternative route for video streaming (for compatibility)
+Route::get('api/lessons/{lesson}/stream', [LessonVideoController::class, 'streamVideo'])
+    ->middleware(['auth:sanctum'])
+    ->name('api.lessons.stream.alt');
 
 /*
 |--------------------------------------------------------------------------
