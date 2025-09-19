@@ -30,6 +30,7 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (\Illuminate\Auth\AuthenticationException $e, $request) {
+            // كل طلب API أو JSON response
             if ($request->expectsJson() || $request->is('api/*')) {
                 $locale = $request->header('Accept-Language', 'ar');
                 $locale = in_array($locale, ['ar', 'en']) ? $locale : 'ar';
@@ -44,6 +45,14 @@ return Application::configure(basePath: dirname(__DIR__))
                 ], 401);
             }
 
-            return redirect()->route('login');
+            // الرد الافتراضي لغير الـ API (بدون redirect للـ login)
+            return response()->json([
+                'success' => false,
+                'status_code' => 401,
+                'message' => [
+                    'ar' => 'غير مصرح لك بالوصول',
+                    'en' => 'Unauthorized'
+                ]
+            ], 401);
         });
     })->create();
