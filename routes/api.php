@@ -173,15 +173,14 @@ Route::middleware(['auth:sanctum', AdminMiddleware::class])
 });
 /*
 |--------------------------------------------------------------------------
-| Video Management Routes - New System
+| Video Management Routes - Direct URL System
 |--------------------------------------------------------------------------
 */
 use App\Http\Controllers\Api\VideoController;
 
-// Public video info and streaming
+// Public video info
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('video/{lesson}/info', [VideoController::class, 'info'])->name('api.video.info');
-    Route::get('video/{lesson}/stream', [VideoController::class, 'stream'])->name('api.video.stream');
 });
 
 // Admin video management

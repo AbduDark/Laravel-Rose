@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -626,58 +625,62 @@
                         <p><strong>المدة:</strong> ${videoData.formatted_duration || 'غير محدد'}</p>
                         <p><strong>الحجم:</strong> ${videoData.formatted_size || 'غير محدد'}</p>
                         <p><strong>يمكن الوصول:</strong> ${videoData.can_access ? '✅ نعم' : '❌ لا'}</p>
-                        <p><strong>رابط البث:</strong></p>
-                        <div class="api-url">${videoData.stream_url || 'غير متوفر'}</div>
+                        <p><strong>رابط الفيديو المباشر:</strong></p>
+                        <div class="api-url">${videoData.video_url || 'غير متوفر'}</div>
                     ` : '<p><em>لا يوجد فيديو لهذا الدرس</em></p>'}
                 </div>
             `;
         }
 
         // دالة تشغيل الفيديو
-        async function playVideo() {
-            const lessonId = document.getElementById('lessonId').value;
-            const apiUrl = getApiUrl();
+       // دالة تشغيل الفيديو
+async function playVideo() {
+    const lessonId = document.getElementById('lessonId').value;
+    const apiUrl = getApiUrl();
 
-            if (!lessonId) {
-                showStatus('❌ يرجى إدخال رقم الدرس', 'error');
-                return;
+    if (!lessonId) {
+        showStatus('❌ يرجى إدخال رقم الدرس', 'error');
+        return;
+    }
+
+    try {
+        // الحصول على معلومات الفيديو أولاً
+        const response = await fetch(`${apiUrl}/video/${lessonId}/info`, {
+            headers: {
+                'Authorization': `Bearer ${currentAuthToken}`,
+                'Accept': 'application/json'
             }
+        });
 
-            const streamUrl = `${apiUrl}/video/${lessonId}/stream`;
+        const data = await response.json();
+
+        if (response.ok && data.success && data.data.video_url) {
+            const videoUrl = data.data.video_url;
             
             document.getElementById('videoPlayerSection').classList.remove('hidden');
             
             const playerContent = document.getElementById('playerContent');
             playerContent.innerHTML = `
                 <video controls preload="metadata" style="width: 100%; max-width: 700px;">
-                    <source src="${streamUrl}" type="video/mp4">
-                    المتصفح لا يدعم تشغيل الفيديو
+                    <source src="${videoUrl}" type="video/mp4">
+                    متصفحك لا يدعم تشغيل الفيديو
                 </video>
-                <p>رابط البث: <code>${streamUrl}</code></p>
+                <p style="margin-top: 10px;">
+                    <strong>رابط الفيديو المباشر:</strong><br>
+                    <a href="${videoUrl}" target="_blank">${videoUrl}</a>
+                </p>
             `;
-
-            // إضافة Authorization header للفيديو
-            const video = playerContent.querySelector('video');
-            video.addEventListener('loadstart', function() {
-                // إضافة token للطلبات
-                if (currentAuthToken) {
-                    fetch(streamUrl, {
-                        headers: {
-                            'Authorization': `Bearer ${currentAuthToken}`,
-                            'Accept': 'video/*'
-                        }
-                    }).then(response => {
-                        if (response.ok) {
-                            showStatus('✅ بدء تشغيل الفيديو', 'success');
-                        }
-                    }).catch(error => {
-                        showStatus(`❌ خطأ في تشغيل الفيديو: ${error.message}`, 'error');
-                    });
-                }
-            });
-
-            showStatus('▶️ تم إنشاء مشغل الفيديو', 'info');
+            
+            showStatus('✅ تم تحميل الفيديو بنجاح', 'success');
+        } else {
+            showStatus(`❌ ${data.message || 'لا يوجد فيديو متاح لهذا الدرس'}`, 'error');
         }
+    } catch (error) {
+        showStatus(`❌ خطأ في تحميل الفيديو: ${error.message}`, 'error');
+    }
+}
+
+        
 
         // دالة حذف الفيديو
         async function deleteVideo() {

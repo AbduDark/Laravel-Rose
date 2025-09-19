@@ -8,7 +8,6 @@ use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Response;
 
 class VideoController extends Controller
 {
@@ -35,17 +34,17 @@ class VideoController extends Controller
             }
 
             // حذف الفيديو السابق إذا وجد
-            if ($lesson->video_path && Storage::exists($lesson->video_path)) {
-                Storage::delete($lesson->video_path);
+            if ($lesson->video_path && Storage::disk('public')->exists($lesson->video_path)) {
+                Storage::disk('public')->delete($lesson->video_path);
             }
 
-            // رفع الفيديو
+            // رفع الفيديو إلى المجلد العام
             $file = $request->file('video');
             $filename = 'lesson_' . $lesson->id . '_' . time() . '.' . $file->getClientOriginalExtension();
-            $videoPath = $file->storeAs('videos', $filename, 'local');
+            $videoPath = $file->storeAs('videos', $filename, 'public');
 
             // الحصول على معلومات الفيديو
-            $fullPath = storage_path('app/' . $videoPath);
+            $fullPath = storage_path('app/public/' . $videoPath);
             $videoSize = filesize($fullPath);
             $videoDuration = $this->getVideoDuration($fullPath);
 
@@ -62,110 +61,15 @@ class VideoController extends Controller
                 'video_path' => $videoPath,
                 'video_size' => $videoSize,
                 'video_duration' => $videoDuration,
-                'stream_url' => route('api.video.stream', ['lesson' => $lesson->id]),
+                'video_url' => $lesson->getVideoDirectUrl(),
+                'formatted_duration' => $this->formatDuration($lesson->video_duration),
+                'formatted_size' => $this->formatSize($lesson->video_size),
                 'message' => 'تم رفع الفيديو بنجاح'
             ], 'تم رفع الفيديو بنجاح');
 
         } catch (\Exception $e) {
             Log::error('Video upload error: ' . $e->getMessage());
             return $this->errorResponse('خطأ في رفع الفيديو: ' . $e->getMessage(), 500);
-        }
-    }
-
-    /**
-     * بث الفيديو
-     */
-    public function stream(Request $request, $lessonId)
-    {
-        try {
-            $lesson = Lesson::find($lessonId);
-            if (!$lesson || !$lesson->video_path) {
-                return $this->errorResponse('الفيديو غير موجود', 404);
-            }
-
-            // التحقق من صلاحية الوصول
-            $user = $request->user();
-            if (!$user) {
-                return $this->errorResponse('يجب تسجيل الدخول أولاً', 401);
-            }
-
-            // التحقق من الصلاحيات
-            if (!$this->canAccessVideo($user, $lesson)) {
-                return $this->errorResponse('ليس لديك صلاحية لمشاهدة هذا الفيديو', 403);
-            }
-
-            $videoPath = storage_path('app/' . $lesson->video_path);
-
-            if (!file_exists($videoPath)) {
-                Log::error('Video file not found: ' . $videoPath);
-                return $this->errorResponse('ملف الفيديو غير موجود', 404);
-            }
-
-            $fileSize = filesize($videoPath);
-            $start = 0;
-            $end = $fileSize - 1;
-            $partialContent = false;
-
-            // دعم Range Requests
-            if ($request->hasHeader('Range')) {
-                $range = $request->header('Range');
-                if (preg_match('/bytes=(\d+)-(\d*)/', $range, $matches)) {
-                    $start = intval($matches[1]);
-                    if (!empty($matches[2])) {
-                        $end = min(intval($matches[2]), $fileSize - 1);
-                    }
-                    $partialContent = true;
-                }
-            }
-
-            $length = $end - $start + 1;
-            $mimeType = mime_content_type($videoPath) ?: 'video/mp4';
-
-            // Headers
-            $headers = [
-                'Content-Type' => $mimeType,
-                'Content-Length' => $length,
-                'Accept-Ranges' => 'bytes',
-                'Cache-Control' => 'no-cache, no-store, must-revalidate',
-                'Pragma' => 'no-cache',
-                'Expires' => '0',
-            ];
-
-            if ($partialContent) {
-                $headers['Content-Range'] = "bytes $start-$end/$fileSize";
-            }
-
-            $statusCode = $partialContent ? 206 : 200;
-
-            return response()->stream(function () use ($videoPath, $start, $end) {
-                $stream = fopen($videoPath, 'rb');
-                fseek($stream, $start);
-                $bytesRemaining = $end - $start + 1;
-                $chunkSize = 8192;
-
-                while ($bytesRemaining > 0 && !feof($stream)) {
-                    $bytesToRead = min($chunkSize, $bytesRemaining);
-                    $chunk = fread($stream, $bytesToRead);
-
-                    if ($chunk === false) {
-                        break;
-                    }
-
-                    echo $chunk;
-                    $bytesRemaining -= strlen($chunk);
-
-                    if (ob_get_level()) {
-                        ob_flush();
-                    }
-                    flush();
-                }
-
-                fclose($stream);
-            }, $statusCode, $headers);
-
-        } catch (\Exception $e) {
-            Log::error('Video stream error: ' . $e->getMessage());
-            return $this->errorResponse('خطأ في بث الفيديو', 500);
         }
     }
 
@@ -189,7 +93,7 @@ class VideoController extends Controller
                 return $this->errorResponse('ليس لديك صلاحية لمشاهدة هذا الفيديو', 403);
             }
 
-            $hasVideo = !empty($lesson->video_path) && Storage::exists($lesson->video_path);
+            $hasVideo = !empty($lesson->video_path) && Storage::disk('public')->exists($lesson->video_path);
 
             return $this->successResponse([
                 'lesson_id' => $lesson->id,
@@ -199,7 +103,7 @@ class VideoController extends Controller
                 'video_size' => $lesson->video_size,
                 'formatted_duration' => $this->formatDuration($lesson->video_duration),
                 'formatted_size' => $this->formatSize($lesson->video_size),
-                'stream_url' => $hasVideo ? route('api.video.stream', ['lesson' => $lesson->id]) : null,
+                'video_url' => $hasVideo ? $lesson->getVideoDirectUrl() : null,
                 'can_access' => $this->canAccessVideo($user, $lesson)
             ], 'تم جلب معلومات الفيديو بنجاح');
 

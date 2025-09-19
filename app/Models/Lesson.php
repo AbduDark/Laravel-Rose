@@ -116,24 +116,6 @@ class Lesson extends Model
     }
 
     /**
-     * الحصول على رابط بث الفيديو المحمي
-     */
-    public function getProtectedVideoStreamUrl(): ?string
-    {
-        if (!$this->hasVideo()) {
-            return null;
-        }
-
-        // إنشاء رمز حماية جديد صالح لمدة ساعة
-        $token = $this->generateVideoToken(60);
-
-        return route('api.video.stream', [
-            'lesson' => $this->id,
-            'token' => $token
-        ]);
-    }
-
-    /**
      * التحقق من حالة معالجة الفيديو
      */
     public function isVideoProcessing(): bool
