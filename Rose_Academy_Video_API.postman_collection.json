@@ -1,0 +1,519 @@
+
+{
+	"info": {
+		"_postman_id": "video-api-collection-2025",
+		"name": "Rose Academy - Video API",
+		"description": "مجموعة شاملة لاختبار جميع وظائف الفيديو في أكاديمية الورد",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{auth_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://your-replit-url.replit.app/api",
+			"type": "string"
+		},
+		{
+			"key": "auth_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "lesson_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "video_token",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Admin Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.collectionVariables.set('auth_token', response.data.access_token);",
+									"    pm.test('Login successful', function () {",
+									"        pm.expect(response.success).to.be.true;",
+									"    });",
+									"} else {",
+									"    pm.test('Login failed', function () {",
+									"        pm.expect.fail('Authentication failed');",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@roseacademy.com\",\n    \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Video Management",
+			"item": [
+				{
+					"name": "Upload Video",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.test('Video upload successful', function () {",
+									"        pm.expect(response.success).to.be.true;",
+									"        pm.expect(response.data.status).to.be.oneOf(['processing', 'ready']);",
+									"    });",
+									"    ",
+									"    if (response.data.video_stream_url) {",
+									"        const url = new URL(response.data.video_stream_url);",
+									"        const urlParams = new URLSearchParams(url.search);",
+									"        const token = urlParams.get('token');",
+									"        if (token) {",
+									"            pm.collectionVariables.set('video_token', token);",
+									"        }",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "video",
+									"description": "ملف الفيديو - يجب أن يكون mp4, mov, avi, wmv, webm",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "is_protected",
+									"value": "true",
+									"description": "هل الفيديو محمي (true/false)",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/lessons/{{lesson_id}}/video/upload",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"lessons",
+								"{{lesson_id}}",
+								"video",
+								"upload"
+							]
+						},
+						"description": "رفع فيديو جديد للدرس (مديرين فقط)"
+					}
+				},
+				{
+					"name": "Get Video Processing Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"pm.test('Status check successful', function () {",
+									"    pm.expect(response.success).to.be.true;",
+									"    pm.expect(response.data.status).to.be.oneOf(['pending', 'processing', 'ready', 'failed']);",
+									"});",
+									"",
+									"if (response.data.stream_url && response.data.status === 'ready') {",
+									"    const url = new URL(response.data.stream_url);",
+									"    const urlParams = new URLSearchParams(url.search);",
+									"    const token = urlParams.get('token');",
+									"    if (token) {",
+									"        pm.collectionVariables.set('video_token', token);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/lessons/{{lesson_id}}/video/status",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"lessons",
+								"{{lesson_id}}",
+								"video",
+								"status"
+							]
+						},
+						"description": "التحقق من حالة معالجة الفيديو"
+					}
+				},
+				{
+					"name": "Refresh Video Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.test('Token refresh successful', function () {",
+									"        pm.expect(response.success).to.be.true;",
+									"        pm.expect(response.data.token).to.exist;",
+									"    });",
+									"    ",
+									"    pm.collectionVariables.set('video_token', response.data.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/lessons/{{lesson_id}}/video/refresh-token",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"lessons",
+								"{{lesson_id}}",
+								"video",
+								"refresh-token"
+							]
+						},
+						"description": "تجديد رمز الوصول للفيديو المحمي"
+					}
+				},
+				{
+					"name": "Delete Video",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Video deletion successful', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/lessons/{{lesson_id}}/video",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"lessons",
+								"{{lesson_id}}",
+								"video"
+							]
+						},
+						"description": "حذف فيديو الدرس (مديرين فقط)"
+					}
+				}
+			]
+		},
+		{
+			"name": "Video Streaming",
+			"item": [
+				{
+					"name": "Stream Video (Protected)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Range",
+								"value": "bytes=0-1024",
+								"description": "اختياري - للتشغيل المتقطع",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/lessons/{{lesson_id}}/stream?token={{video_token}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"lessons",
+								"{{lesson_id}}",
+								"stream"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{video_token}}",
+									"description": "رمز الحماية للفيديو المحمي"
+								}
+							]
+						},
+						"description": "بث الفيديو المحمي مع رمز الوصول"
+					}
+				},
+				{
+					"name": "Stream Video (Unprotected)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Range",
+								"value": "bytes=0-1024",
+								"description": "اختياري - للتشغيل المتقطع",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/lessons/{{lesson_id}}/stream",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"lessons",
+								"{{lesson_id}}",
+								"stream"
+							]
+						},
+						"description": "بث الفيديو غير المحمي"
+					}
+				},
+				{
+					"name": "Test Range Request",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Range",
+								"value": "bytes=0-1024000",
+								"description": "طلب جزء محدد من الفيديو"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/lessons/{{lesson_id}}/stream?token={{video_token}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"lessons",
+								"{{lesson_id}}",
+								"stream"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{video_token}}"
+								}
+							]
+						},
+						"description": "اختبار طلب جزء محدد من الفيديو للتأكد من دعم التشغيل المتقطع"
+					}
+				}
+			]
+		},
+		{
+			"name": "Error Testing",
+			"item": [
+				{
+					"name": "Stream Video Without Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Should fail without token', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([401, 403]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/lessons/{{lesson_id}}/stream",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"lessons",
+								"{{lesson_id}}",
+								"stream"
+							]
+						},
+						"description": "اختبار الوصول للفيديو المحمي بدون رمز"
+					}
+				},
+				{
+					"name": "Stream Video Without Auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Should fail without authentication', function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([401, 403]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/lessons/{{lesson_id}}/stream",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"lessons",
+								"{{lesson_id}}",
+								"stream"
+							]
+						},
+						"description": "اختبار الوصول للفيديو بدون تسجيل دخول"
+					}
+				},
+				{
+					"name": "Stream Non-existent Video",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Should return 404', function () {",
+									"    pm.expect(pm.response.code).to.equal(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/lessons/99999/stream",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"lessons",
+								"99999",
+								"stream"
+							]
+						},
+						"description": "اختبار الوصول لفيديو غير موجود"
+					}
+				}
+			]
+		}
+	]
+}

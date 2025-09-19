@@ -195,3 +195,16 @@ Route::middleware(['auth:sanctum', AdminMiddleware::class])
             ->name('admin.lesson.video.status');
     });
 
+
+// Video routes - Admin only
+Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+    Route::post('/lessons/{lesson}/video/upload', [LessonVideoController::class, 'upload'])->name('lessons.video.upload');
+    Route::delete('/lessons/{lesson}/video', [LessonVideoController::class, 'deleteVideo'])->name('lessons.video.delete');
+});
+
+// Video streaming and status - Authenticated users
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/lessons/{lesson}/video/status', [LessonVideoController::class, 'getProcessingStatus'])->name('lessons.video.status');
+    Route::get('/lessons/{lesson}/stream', [LessonVideoController::class, 'streamVideo'])->name('api.lessons.stream');
+    Route::post('/lessons/{lesson}/video/refresh-token', [LessonVideoController::class, 'refreshVideoToken'])->name('lessons.video.refresh-token');
+});

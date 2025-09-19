@@ -97,24 +97,25 @@ class Lesson extends Model
     /**
      * الحصول على رابط بث الفيديو المحمي
      */
- public function getProtectedVideoStreamUrl(): ?string
+    public function getProtectedVideoStreamUrl(): ?string
     {
         if (!$this->hasVideo()) {
             return null;
         }
 
-        // استخدم signed route للحماية (صالح 30 دقيقة)
-        $token = $this->generateVideoToken(30); // قصّر الوقت للأمان
-        return route('lesson.stream', [
+        // إنشاء رمز حماية جديد صالح لمدة ساعة
+        $token = $this->generateVideoToken(60);
+        
+        return route('api.lessons.stream', [
             'lesson' => $this->id,
             'token' => $token
-        ]) . '?signature=' . hash_hmac('sha256', route('lesson.stream', ['lesson' => $this->id, 'token' => $token]), config('app.key')); // signed بسيط
+        ]);
     }
 
     /**
      * الحصول على رابط بث الفيديو
      */
- public function getVideoStreamUrl(): ?string
+    public function getVideoStreamUrl(): ?string
     {
         if (!$this->hasVideo()) {
             return null;
@@ -124,8 +125,10 @@ class Lesson extends Model
             return $this->getProtectedVideoStreamUrl();
         }
 
-        // للفيديو غير المحمي، استخدم signed أيضاً للأمان
-        return URL::temporarySignedRoute('lesson.stream', now()->addMinutes(30), ['lesson' => $this->id]);
+        // للفيديو غير المحمي، استخدم signed route للأمان
+        return URL::temporarySignedRoute('api.lessons.stream', now()->addMinutes(60), [
+            'lesson' => $this->id
+        ]);
     }
 
     /**

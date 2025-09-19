@@ -176,34 +176,35 @@ public function upload(Request $request, $lessonId)
             $user = auth()->user();
 
             if (!$user) {
-                abort(401, 'يجب تسجيل الدخول أولاً');
+                return $this->errorResponse('يجب تسجيل الدخول أولاً', 401);
             }
 
             if (!$this->canAccessLesson($user, $lesson)) {
-                abort(403, 'ليس لديك صلاحية لمشاهدة هذا الدرس');
+                return $this->errorResponse('ليس لديك صلاحية لمشاهدة هذا الدرس', 403);
             }
 
             if (!$lesson->hasVideo()) {
-                abort(404, 'الفيديو غير متوفر حالياً');
+                return $this->errorResponse('الفيديو غير متوفر حالياً', 404);
             }
 
             // التحقق من رمز الحماية إذا كان الفيديو محمي
             if ($lesson->is_video_protected && !$user->isAdmin()) {
                 $token = $request->get('token');
                 if (!$token || !$lesson->isValidVideoToken($token)) {
-                    abort(403, 'رمز الوصول غير صحيح أو منتهي الصلاحية');
+                    return $this->errorResponse('رمز الوصول غير صحيح أو منتهي الصلاحية', 403);
                 }
             }
 
             $videoPath = storage_path('app/' . $lesson->video_path);
 
             if (!file_exists($videoPath)) {
-                abort(404, 'ملف الفيديو غير موجود');
+                return $this->errorResponse('ملف الفيديو غير موجود', 404);
             }
 
             $fileSize = filesize($videoPath);
             $start = 0;
             $end = $fileSize - 1;
+            $partialContent = false;
 
             // دعم Range Requests للتشغيل المتقطع
             if ($request->hasHeader('Range')) {
@@ -212,42 +213,86 @@ public function upload(Request $request, $lessonId)
                 if (preg_match('/bytes=(\d+)-(\d*)/', $range, $matches)) {
                     $start = intval($matches[1]);
                     if (!empty($matches[2])) {
-                        $end = intval($matches[2]);
+                        $end = min(intval($matches[2]), $fileSize - 1);
                     }
+                    $partialContent = true;
                 }
             }
 
             $length = $end - $start + 1;
+            $mimeType = mime_content_type($videoPath) ?: 'video/mp4';
 
-            // Headers للحماية (مع inline لمنع التحميل)
+            // تسجيل عملية البث
+            Log::info('Video stream accessed', [
+                'lesson_id' => $lesson->id,
+                'user_id' => $user->id,
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'range' => $request->header('Range'),
+                'is_protected' => $lesson->is_video_protected
+            ]);
+
+            // Headers للحماية المتقدمة
             $headers = [
-                'Content-Type' => mime_content_type($videoPath) ?: 'video/mp4',
+                'Content-Type' => $mimeType,
                 'Content-Length' => $length,
                 'Accept-Ranges' => 'bytes',
-                'Content-Range' => "bytes $start-$end/$fileSize",
-                'Content-Disposition' => 'inline; filename="video.mp4"', // inline عشان يعرض مش يحمل
+                'Content-Disposition' => 'inline',
                 'Cache-Control' => 'no-cache, no-store, must-revalidate, private',
                 'Pragma' => 'no-cache',
                 'Expires' => '0',
+                'X-Content-Type-Options' => 'nosniff',
+                'X-Frame-Options' => 'SAMEORIGIN',
+                'Content-Security-Policy' => "default-src 'self'; media-src 'self'",
+                'X-Robots-Tag' => 'noindex, nofollow, nosnippet, noarchive',
+                'X-Video-Protection' => 'enabled',
+                'Referrer-Policy' => 'strict-origin-when-cross-origin'
             ];
+
+            if ($partialContent) {
+                $headers['Content-Range'] = "bytes $start-$end/$fileSize";
+            }
+
+            $statusCode = $partialContent ? 206 : 200;
 
             return response()->stream(function () use ($videoPath, $start, $end) {
                 $stream = fopen($videoPath, 'rb');
-                fseek($stream, $start);
-                $bytesRead = 0;
-                $chunkSize = 8192; // قراءة بأجزاء صغيرة للـ streaming
-                while ($bytesRead < ($end - $start + 1) && !feof($stream)) {
-                    $chunk = fread($stream, $chunkSize);
-                    echo $chunk;
-                    $bytesRead += strlen($chunk);
-                    flush(); // فلاش للـ real-time streaming
+                if (!$stream) {
+                    return;
                 }
+
+                fseek($stream, $start);
+                $bytesRemaining = $end - $start + 1;
+                $chunkSize = 8192;
+
+                while ($bytesRemaining > 0 && !feof($stream)) {
+                    $bytesToRead = min($chunkSize, $bytesRemaining);
+                    $chunk = fread($stream, $bytesToRead);
+                    
+                    if ($chunk === false) {
+                        break;
+                    }
+
+                    echo $chunk;
+                    $bytesRemaining -= strlen($chunk);
+                    
+                    if (ob_get_level()) {
+                        ob_flush();
+                    }
+                    flush();
+                }
+                
                 fclose($stream);
-            }, 200, $headers);
+            }, $statusCode, $headers);
 
         } catch (\Exception $e) {
-            Log::error('Stream video error: ' . $e->getMessage());
-            abort(500, 'خطأ في بث الفيديو');
+            Log::error('Stream video error: ' . $e->getMessage(), [
+                'lesson_id' => $lesson->id,
+                'user_id' => $user->id ?? null,
+                'trace' => $e->getTraceAsString()
+            ]);
+            
+            return $this->errorResponse('خطأ في بث الفيديو', 500);
         }
     }
     /**
