@@ -170,7 +170,7 @@ Route::middleware(['auth:sanctum', AdminMiddleware::class])
     Route::get('notifications/statistics',    [NotificationController::class, 'statistics']);
 });
 // Video streaming and status - Authenticated users
-Route::middleware(['auth:sanctum', 'cors'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('lessons/{lesson}/video/status', [LessonVideoController::class, 'getProcessingStatus'])->name('lessons.video.status');
     Route::get('lessons/{lesson}/stream', [LessonVideoController::class, 'streamVideo'])->name('api.lessons.stream');
     Route::post('lessons/{lesson}/video/refresh-token', [LessonVideoController::class, 'refreshVideoToken'])->name('lessons.video.refresh-token');
