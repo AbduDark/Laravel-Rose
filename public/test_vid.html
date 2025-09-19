@@ -367,7 +367,72 @@
         }
 
         // عرض معلومات الفيديو
-        function displayVideoInfo(videoData) {
+      // عرض معلومات الفيديو
+function displayVideoInfo(videoData) {
+    const videoInfoSection = document.getElementById('videoInfo');
+    const videoDetailsDiv = document.getElementById('videoDetails');
+
+    let infoHtml = `
+        <div class="video-info">
+            <h3>📋 تفاصيل الفيديو:</h3>
+            <p><strong>🔢 رقم الدرس:</strong> ${videoData.lesson_id}</p>
+            <p><strong>⚡ الحالة:</strong> ${getStatusInArabic(videoData.status)}</p>
+            <p><strong>📹 يوجد فيديو:</strong> ${videoData.has_video ? 'نعم ✅' : 'لا ❌'}</p>
+            <p><strong>🔒 محمي:</strong> ${videoData.is_protected ? 'نعم 🔐' : 'لا 🔓'}</p>
+    `;
+
+    if (videoData.progress !== undefined) {
+        infoHtml += `
+            <p><strong>📊 التقدم:</strong> ${videoData.progress}%</p>
+            <div style="background: #e0e0e0; border-radius: 10px; padding: 3px;">
+                <div style="background: linear-gradient(90deg, #667eea, #764ba2); height: 20px; border-radius: 7px; width: ${videoData.progress}%; transition: width 0.3s;"></div>
+            </div>
+        `;
+    }
+
+    if (videoData.video_info) {
+        infoHtml += `
+            <h4>🎬 معلومات إضافية:</h4>
+            <p><strong>⏱️ المدة:</strong> ${videoData.video_info.duration || 'غير متوفر'}</p>
+            <p><strong>💾 الحجم:</strong> ${videoData.video_info.size || 'غير متوفر'}</p>
+        `;
+    }
+
+    if (videoData.stream_url) {
+        // ✅ التحقق إذا كان الرابط كامل أو نسبي
+        let streamUrl = videoData.stream_url;
+        if (!/^https?:\/\//i.test(streamUrl)) {
+            streamUrl = `${getApiUrl()}${streamUrl}`;
+        }
+
+        currentVideoUrl = streamUrl;
+
+        infoHtml += `
+            <h4>🔗 رابط البث:</h4>
+            <div class="api-url">${streamUrl}</div>
+        `;
+
+        // استخراج الـ token من الرابط
+        try {
+            const url = new URL(streamUrl);
+            const token = url.searchParams.get('token');
+            if (token) {
+                currentVideoToken = token;
+                infoHtml += `
+                    <h4>🎫 رمز الفيديو:</h4>
+                    <div class="token-display">${token}</div>
+                `;
+            }
+        } catch (e) {
+            console.warn("⚠️ لم يتمكن من قراءة URL:", e);
+        }
+    }
+
+    infoHtml += '</div>';
+    videoDetailsDiv.innerHTML = infoHtml;
+    videoInfoSection.style.display = 'block';
+}
+
             const videoInfoSection = document.getElementById('videoInfo');
             const videoDetailsDiv = document.getElementById('videoDetails');
 
@@ -414,7 +479,7 @@
                         <div class="token-display">${token}</div>
                     `;
                 }
-            }
+            
 
             infoHtml += '</div>';
             videoDetailsDiv.innerHTML = infoHtml;
