@@ -194,7 +194,7 @@
             </div>
             <div class="form-group">
                 <label for="apiUrl">رابط API:</label>
-                <input type="text" id="apiUrl" value="https://api.rose-academy.com/api" placeholder="http://localhost:8000/api">
+                <input type="text" id="apiUrl" value="http://0.0.0.0:5000/api" placeholder="http://localhost:8000/api">
             </div>
             <button onclick="login()">تسجيل الدخول</button>
         </div>
@@ -205,10 +205,11 @@
             
             <div class="form-group">
                 <label for="lessonId">رقم الدرس:</label>
-                <input type="number" id="lessonId" value="2" placeholder="ادخل رقم الدرس">
+                <input type="number" id="lessonId" value="1" placeholder="ادخل رقم الدرس">
             </div>
 
             <div class="controls">
+                <button onclick="checkAuthStatus()">فحص حالة تسجيل الدخول</button>
                 <button onclick="checkVideoStatus()">فحص حالة الفيديو</button>
                 <button onclick="loadVideo()">تحميل الفيديو</button>
                 <button onclick="refreshToken()">تجديد الرمز</button>
@@ -226,6 +227,15 @@
         let authToken = '';
         let videoToken = '';
         let currentVideoUrl = '';
+
+        // دالة للتحقق من حالة تسجيل الدخول
+        function checkAuthStatus() {
+            console.log('حالة تسجيل الدخول:', {
+                hasToken: !!authToken,
+                tokenLength: authToken ? authToken.length : 0
+            });
+            return !!authToken;
+        }
 
         // إضافة API URL للحالة
         function showStatus(message, type = 'info') {
@@ -259,6 +269,9 @@
                 return;
             }
 
+            // تسجيل المتغيرات للتشخيص
+            console.log('محاولة تسجيل دخول:', { email, apiUrl });
+
             try {
                 showStatus(`محاولة تسجيل الدخول إلى: ${apiUrl}/auth/login`, 'info');
                 
@@ -278,6 +291,7 @@
 
                 if (response.ok && data.success) {
                     authToken = data.data.access_token;
+                    console.log('تم تسجيل الدخول بنجاح، الرمز:', authToken.substring(0, 20) + '...');
                     showStatus('تم تسجيل الدخول بنجاح! 🎉', 'success');
                     document.getElementById('loginSection').style.display = 'none';
                     document.getElementById('videoSection').style.display = 'block';
@@ -294,8 +308,13 @@
             const lessonId = document.getElementById('lessonId').value;
             const apiUrl = getApiUrl();
 
-            if (!lessonId || !authToken) {
-                showStatus('يرجى إدخال رقم الدرس والتأكد من تسجيل الدخول', 'error');
+            if (!lessonId) {
+                showStatus('يرجى إدخال رقم الدرس', 'error');
+                return;
+            }
+
+            if (!authToken) {
+                showStatus('يرجى تسجيل الدخول أولاً', 'error');
                 return;
             }
 
@@ -362,8 +381,13 @@
             const lessonId = document.getElementById('lessonId').value;
             const apiUrl = getApiUrl();
 
-            if (!lessonId || !authToken) {
-                showStatus('يرجى إدخال رقم الدرس والتأكد من تسجيل الدخول', 'error');
+            if (!lessonId) {
+                showStatus('يرجى إدخال رقم الدرس', 'error');
+                return;
+            }
+
+            if (!authToken) {
+                showStatus('يرجى تسجيل الدخول أولاً', 'error');
                 return;
             }
 
@@ -441,8 +465,13 @@
             const lessonId = document.getElementById('lessonId').value;
             const apiUrl = getApiUrl();
 
-            if (!lessonId || !authToken) {
-                showStatus('يرجى إدخال رقم الدرس والتأكد من تسجيل الدخول', 'error');
+            if (!lessonId) {
+                showStatus('يرجى إدخال رقم الدرس', 'error');
+                return;
+            }
+
+            if (!authToken) {
+                showStatus('يرجى تسجيل الدخول أولاً', 'error');
                 return;
             }
 
