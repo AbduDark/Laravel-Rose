@@ -177,10 +177,13 @@ class LessonController extends Controller
 
             // إضافة معلومات إضافية للدروس
             $lessons->each(function($lesson) use ($user, $isSubscribed) {
+                // إضافة رابط الفيديو إذا كان المستخدم يستطيع الوصول للدرس
                 if ($lesson->can_access && $lesson->has_video) {
-                    $lesson->video_stream_url = $lesson->getVideoStreamUrl();
+                    $lesson->video_stream_url = route('api.video.stream', ['lesson' => $lesson->id]);
                     $lesson->video_duration_formatted = $lesson->getFormattedDuration();
                     $lesson->video_size_formatted = $lesson->getFormattedSize();
+                } else {
+                    $lesson->video_stream_url = null;
                 }
             });
 
@@ -232,8 +235,8 @@ class LessonController extends Controller
             ));
 
             return $this->successResponse(
-                $lesson->load('course'), 
-                'تم إنشاء الدرس بنجاح', 
+                $lesson->load('course'),
+                'تم إنشاء الدرس بنجاح',
                 201
             );
 
@@ -270,7 +273,7 @@ class LessonController extends Controller
             $lesson->update($request->all());
 
             return $this->successResponse(
-                $lesson->load('course'), 
+                $lesson->load('course'),
                 'تم تحديث الدرس بنجاح'
             );
 
@@ -292,10 +295,10 @@ class LessonController extends Controller
             }
 
             $lesson = Lesson::findOrFail($id);
-            
+
             // حذف ملف الفيديو إذا وجد
             $lesson->deleteVideoFile();
-            
+
             $lesson->delete();
 
             return $this->successResponse([], 'تم حذف الدرس بنجاح');
@@ -311,7 +314,7 @@ class LessonController extends Controller
      */
     public function show($id)
     {
-        try {   
+        try {
             /** @var User $user */
             $user = auth()->user();
 
@@ -348,11 +351,13 @@ if (!$lesson->course->is_active) {
             }
 
             // إضافة معلومات الوصول للفيديو
-            if ($lesson->has_video) {
-                $lesson->video_stream_url = $lesson->getVideoStreamUrl();
+            if ($lesson->has_video && $canAccess) {
+                $lesson->video_stream_url = route('api.video.stream', ['lesson' => $lesson->id]);
                 $lesson->video_duration_formatted = $lesson->getFormattedDuration();
                 $lesson->video_size_formatted = $lesson->getFormattedSize();
                 $lesson->video_status_message = $lesson->getVideoStatusMessage();
+            } else {
+                $lesson->video_stream_url = null;
             }
 
             return $this->successResponse($lesson, 'تم جلب الدرس بنجاح');

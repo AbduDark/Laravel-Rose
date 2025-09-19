@@ -19,31 +19,21 @@ class LessonResource extends JsonResource
             'course_id' => $this->course_id,
             'title' => $this->title,
             'description' => $this->description,
-            'content' => $this->when($canAccess, $this->content),
-            'duration_minutes' => $this->duration_minutes,
+            'content' => $this->content,
             'order' => $this->order,
+            'duration_minutes' => $this->duration_minutes,
             'is_free' => $this->is_free,
             'target_gender' => $this->target_gender,
             'can_access' => $canAccess,
-            
-            // معلومات الفيديو
-            'has_video' => $this->hasVideo(),
-            'video_status' => $this->when($user && $user->isAdmin(), $this->video_status),
-            'video_duration_formatted' => $this->when($canAccess && $this->hasVideo(), $this->getFormattedDuration()),
-            'video_size_formatted' => $this->when($canAccess && $this->hasVideo(), $this->getFormattedSize()),
-            'video_stream_url' => $this->when($canAccess && $this->hasVideo(), $this->getVideoStreamUrl()),
-            'is_video_protected' => $this->when($user && $user->isAdmin(), $this->is_video_protected),
-            'video_status_message' => $this->when($this->video_status, $this->getVideoStatusMessage()),
-            
-            // معلومات الكورس (إذا تم تحميلها)
-            'course' => $this->whenLoaded('course'),
-            
-            // التعليقات (إذا تم تحميلها)
-            'comments' => $this->whenLoaded('comments'),
-            
-            // timestamps
+            'has_video' => $this->has_video,
+            'video_stream_url' => $this->can_access && $this->has_video
+                ? route('api.video.stream', ['lesson' => $this->id])
+                : null,
+            'video_duration_formatted' => $this->has_video ? $this->getFormattedDuration() : null,
+            'video_size_formatted' => $this->has_video ? $this->getFormattedSize() : null,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'course' => $this->whenLoaded('course'),
         ];
     }
 

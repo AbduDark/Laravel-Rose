@@ -99,7 +99,7 @@ class Lesson extends Model
             return '';
         }
 
-        $baseUrl = route('api.lessons.stream', ['lesson' => $this->id]);
+        $baseUrl = route('api.video.stream', ['lesson' => $this->id]);
 
         if ($this->is_video_protected) {
             $token = $this->video_token ?: $this->generateVideoToken();
@@ -134,7 +134,7 @@ class Lesson extends Model
         // إنشاء رمز حماية جديد صالح لمدة ساعة
         $token = $this->generateVideoToken(60);
 
-        return route('api.lessons.stream', [
+        return route('api.video.stream', [
             'lesson' => $this->id,
             'token' => $token
         ]);
