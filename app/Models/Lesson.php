@@ -25,13 +25,9 @@ class Lesson extends Model
         'is_free',
         'target_gender',
         'video_path',
-        'video_status', // processing, ready, failed
-        'video_duration', // مدة الفيديو بالثواني
-        'video_size', // حجم الفيديو بالبايت
-        'video_token', // رمز الحماية للفيديو
-        'video_token_expires_at', // انتهاء صلاحية رمز الفيديو
-        'is_video_protected', // هل الفيديو محمي
-        'video_metadata', // معلومات إضافية عن الفيديو
+        'video_status',
+        'video_duration',
+        'video_size',
     ];
 
     protected $appends = ['can_access', 'has_video'];
@@ -40,11 +36,8 @@ class Lesson extends Model
     {
         return [
             'is_free' => 'boolean',
-            'is_video_protected' => 'boolean',
             'video_duration' => 'integer',
             'video_size' => 'integer',
-            'video_token_expires_at' => 'datetime',
-            'video_metadata' => 'array',
         ];
     }
 
@@ -63,7 +56,7 @@ class Lesson extends Model
      */
     public function hasVideo(): bool
     {
-        return !empty($this->video_path) && $this->video_status === 'ready';
+        return !empty($this->video_path);
     }
 
     /**

@@ -171,27 +171,23 @@ Route::middleware(['auth:sanctum', AdminMiddleware::class])
     Route::post('notifications/send',         [NotificationController::class, 'sendNotification']);
     Route::get('notifications/statistics',    [NotificationController::class, 'statistics']);
 });
-// Video streaming and status - Authenticated users
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('lessons/{lesson}/video/status', [LessonVideoController::class, 'getProcessingStatus'])->name('lessons.video.status');
-    Route::get('lessons/{lesson}/stream', [LessonVideoController::class, 'streamVideo'])->name('api.lessons.stream');
-    Route::post('lessons/{lesson}/video/refresh-token', [LessonVideoController::class, 'refreshVideoToken'])->name('lessons.video.refresh-token');
-});
-
-// Alternative route for video streaming (for compatibility)
-Route::get('api/lessons/{lesson}/stream', [LessonVideoController::class, 'streamVideo'])
-    ->middleware(['auth:sanctum'])
-    ->name('api.lessons.stream.alt');
-
 /*
 |--------------------------------------------------------------------------
-| Admin Video Management Routes
+| Video Management Routes - New System
 |--------------------------------------------------------------------------
 */
+use App\Http\Controllers\Api\VideoController;
+
+// Public video info and streaming
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('video/{lesson}/info', [VideoController::class, 'info'])->name('api.video.info');
+    Route::get('video/{lesson}/stream', [VideoController::class, 'stream'])->name('api.video.stream');
+});
+
+// Admin video management
 Route::middleware(['auth:sanctum', AdminMiddleware::class])
     ->prefix('admin')
     ->group(function () {
-        Route::post('/lessons/{lesson}/video/upload', [LessonVideoController::class, 'upload'])->name('admin.lesson.video.upload');
-        Route::delete('/lessons/{lesson}/video', [LessonVideoController::class, 'deleteVideo'])->name('admin.lesson.video.delete');
-        Route::get('/lessons/{lesson}/video/status', [LessonVideoController::class, 'getProcessingStatus'])->name('admin.lesson.video.status');
+        Route::post('video/{lesson}/upload', [VideoController::class, 'upload'])->name('admin.video.upload');
+        Route::delete('video/{lesson}/delete', [VideoController::class, 'delete'])->name('admin.video.delete');
     });
