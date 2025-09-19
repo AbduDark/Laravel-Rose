@@ -1,10 +1,15 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختبار نظام الفيديو - أكاديمية الورد</title>
+    <title>اختبار نظام الفيديو الكامل - أكاديمية الورد</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
@@ -57,6 +62,8 @@
         }
 
         input[type="text"],
+        input[type="email"],
+        input[type="password"],
         input[type="number"],
         textarea {
             width: 100%;
@@ -151,6 +158,23 @@
             border-left-color: #17a2b8;
         }
 
+        .hidden {
+            display: none;
+        }
+
+        .user-info {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .logout-btn {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            margin-right: 10px;
+        }
+
         .video-info {
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             padding: 20px;
@@ -167,11 +191,6 @@
             font-size: 13px;
             word-break: break-all;
             border: 1px solid #dee2e6;
-        }
-
-        .quick-test {
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
         }
 
         .token-display {
@@ -202,28 +221,17 @@
 </head>
 <body>
     <div class="container">
-        <h1>🎥 اختبار نظام الفيديو - أكاديمية الورد</h1>
+        <h1>🎥 اختبار نظام الفيديو الكامل - أكاديمية الورد</h1>
 
-        <!-- تعليمات سريعة -->
-        <div class="instructions">
-            <h3>📝 كيفية الاستخدام:</h3>
-            <p>1. ادخل الـ Auth Token الخاص بك في الخانة أدناه</p>
-            <p>2. ادخل رقم الدرس الذي تريد اختباره</p>
-            <p>3. اضغط على "اختبار سريع للفيديو" وستحصل على النتيجة فوراً</p>
-        </div>
-
-        <!-- قسم الاختبار السريع -->
-        <div class="section">
-            <h2>⚡ اختبار سريع للفيديو</h2>
-
-            <div class="form-group">
-                <label for="authToken">🔑 Auth Token:</label>
-                <textarea id="authToken" rows="3" placeholder="ضع الـ Auth Token هنا..."></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="lessonId">📚 رقم الدرس:</label>
-                <input type="number" id="lessonId" value="1" placeholder="رقم الدرس">
+        <!-- قسم تسجيل الدخول -->
+        <div id="loginSection" class="section">
+            <h2>🔐 تسجيل الدخول</h2>
+            
+            <div class="instructions">
+                <h3>📝 كيفية الاستخدام:</h3>
+                <p>1. ادخل بياناتك لتسجيل الدخول</p>
+                <p>2. بعد نجاح تسجيل الدخول، ستظهر لك صفحة اختبار الفيديو</p>
+                <p>3. ادخل رقم الدرس واضغط على "اختبار الفيديو"</p>
             </div>
 
             <div class="form-group">
@@ -231,20 +239,54 @@
                 <input type="text" id="apiUrl" value="https://api.rose-academy.com/api" placeholder="API Base URL">
             </div>
 
+            <div class="form-group">
+                <label for="email">📧 البريد الإلكتروني:</label>
+                <input type="email" id="email" placeholder="example@example.com">
+            </div>
+
+            <div class="form-group">
+                <label for="password">🔒 كلمة المرور:</label>
+                <input type="password" id="password" placeholder="كلمة المرور">
+            </div>
+
             <div class="controls">
-                <button class="quick-test" onclick="quickVideoTest()">🚀 اختبار سريع للفيديو</button>
-                <button onclick="clearAll()">🗑️ مسح الكل</button>
+                <button onclick="login()">🚀 تسجيل الدخول</button>
+                <button onclick="clearLoginForm()">🗑️ مسح البيانات</button>
+            </div>
+        </div>
+
+        <!-- قسم معلومات المستخدم -->
+        <div id="userSection" class="section hidden">
+            <div id="userInfo" class="user-info">
+                <h3>👤 معلومات المستخدم</h3>
+                <div id="userDetails"></div>
+                <button class="logout-btn" onclick="logout()">🚪 تسجيل الخروج</button>
+            </div>
+        </div>
+
+        <!-- قسم اختبار الفيديو -->
+        <div id="videoTestSection" class="section hidden">
+            <h2>🎬 اختبار الفيديو</h2>
+
+            <div class="form-group">
+                <label for="lessonId">📚 رقم الدرس:</label>
+                <input type="number" id="lessonId" value="1" placeholder="رقم الدرس">
+            </div>
+
+            <div class="controls">
+                <button onclick="testVideo()">🎥 اختبار الفيديو</button>
+                <button onclick="clearVideoTest()">🗑️ مسح الاختبار</button>
             </div>
         </div>
 
         <!-- قسم معلومات الفيديو -->
-        <div id="videoInfo" class="section" style="display: none;">
+        <div id="videoInfoSection" class="section hidden">
             <h2>📊 معلومات الفيديو</h2>
             <div id="videoDetails"></div>
         </div>
 
         <!-- مشغل الفيديو -->
-        <div id="videoPlayer" class="section" style="display: none;">
+        <div id="videoPlayerSection" class="section hidden">
             <h2>🎬 مشغل الفيديو</h2>
             <div id="playerContent"></div>
         </div>
@@ -256,8 +298,33 @@
     <script>
         // متغيرات عامة
         let currentAuthToken = '';
+        let currentUser = null;
         let currentVideoToken = '';
         let currentVideoUrl = '';
+
+        // فحص الجلسة عند تحميل الصفحة
+        window.onload = function() {
+            checkExistingSession();
+        };
+
+        // دالة فحص الجلسة الموجودة
+        function checkExistingSession() {
+            const savedToken = localStorage.getItem('auth_token');
+            const savedUser = localStorage.getItem('user_data');
+            
+            if (savedToken && savedUser) {
+                try {
+                    currentAuthToken = savedToken;
+                    currentUser = JSON.parse(savedUser);
+                    showUserSection();
+                    showStatus('✅ تم استعادة الجلسة السابقة', 'success');
+                } catch (e) {
+                    localStorage.removeItem('auth_token');
+                    localStorage.removeItem('user_data');
+                    showStatus('⚠️ فشل في استعادة الجلسة، يرجى تسجيل الدخول مرة أخرى', 'error');
+                }
+            }
+        }
 
         // دالة عرض الحالة
         function showStatus(message, type = 'info') {
@@ -284,40 +351,111 @@
             return document.getElementById('apiUrl').value.trim().replace(/\/+$/, '');
         }
 
-        // دالة الحصول على Auth Token
-        function getAuthToken() {
-            return document.getElementById('authToken').value.trim();
-        }
-
-        // دالة الحصول على Lesson ID
-        function getLessonId() {
-            return document.getElementById('lessonId').value.trim();
-        }
-
-        // دالة الاختبار السريع
-        async function quickVideoTest() {
-            const authToken = getAuthToken();
-            const lessonId = getLessonId();
+        // دالة تسجيل الدخول
+        async function login() {
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
             const apiUrl = getApiUrl();
 
-            // التحقق من البيانات المطلوبة
-            if (!authToken) {
-                showStatus('❌ يرجى إدخال Auth Token', 'error');
+            if (!email || !password) {
+                showStatus('❌ يرجى إدخال البريد الإلكتروني وكلمة المرور', 'error');
                 return;
             }
+
+            showStatus('🔄 جاري تسجيل الدخول...', 'info');
+
+            try {
+                const response = await fetch(`${apiUrl}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    currentAuthToken = data.data.token;
+                    currentUser = data.data.user;
+                    
+                    // حفظ البيانات في localStorage
+                    localStorage.setItem('auth_token', currentAuthToken);
+                    localStorage.setItem('user_data', JSON.stringify(currentUser));
+                    
+                    showUserSection();
+                    showStatus('✅ تم تسجيل الدخول بنجاح!', 'success');
+                } else {
+                    showStatus(`❌ فشل تسجيل الدخول: ${data.message || 'خطأ غير معروف'}`, 'error');
+                }
+            } catch (error) {
+                showStatus(`❌ خطأ في الاتصال: ${error.message}`, 'error');
+            }
+        }
+
+        // دالة إظهار قسم المستخدم
+        function showUserSection() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('userSection').classList.remove('hidden');
+            document.getElementById('videoTestSection').classList.remove('hidden');
+            
+            const userDetails = document.getElementById('userDetails');
+            userDetails.innerHTML = `
+                <p><strong>الاسم:</strong> ${currentUser.name}</p>
+                <p><strong>البريد الإلكتروني:</strong> ${currentUser.email}</p>
+                <p><strong>الدور:</strong> ${currentUser.role === 'admin' ? 'مدير' : 'طالب'}</p>
+                <p><strong>رمز المستخدم:</strong> ${currentUser.id}</p>
+            `;
+        }
+
+        // دالة تسجيل الخروج
+        function logout() {
+            currentAuthToken = '';
+            currentUser = null;
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('user_data');
+            
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('userSection').classList.add('hidden');
+            document.getElementById('videoTestSection').classList.add('hidden');
+            document.getElementById('videoInfoSection').classList.add('hidden');
+            document.getElementById('videoPlayerSection').classList.add('hidden');
+            
+            showStatus('👋 تم تسجيل الخروج بنجاح', 'info');
+        }
+
+        // دالة مسح بيانات تسجيل الدخول
+        function clearLoginForm() {
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+            showStatus('🗑️ تم مسح بيانات تسجيل الدخول', 'info');
+        }
+
+        // دالة اختبار الفيديو
+        async function testVideo() {
+            const lessonId = document.getElementById('lessonId').value.trim();
+            const apiUrl = getApiUrl();
 
             if (!lessonId) {
                 showStatus('❌ يرجى إدخال رقم الدرس', 'error');
                 return;
             }
 
-            currentAuthToken = authToken;
+            if (!currentAuthToken) {
+                showStatus('❌ يجب تسجيل الدخول أولاً', 'error');
+                return;
+            }
+
             showStatus('🔄 بدء اختبار الفيديو...', 'info');
 
             try {
                 // 1. فحص حالة الفيديو
                 showStatus('📊 فحص حالة الفيديو...', 'info');
-                const videoStatus = await checkVideoStatus();
+                const videoStatus = await checkVideoStatus(lessonId);
 
                 if (!videoStatus.success) {
                     showStatus(`❌ فشل في فحص حالة الفيديو: ${videoStatus.error}`, 'error');
@@ -342,8 +480,7 @@
         }
 
         // فحص حالة الفيديو
-        async function checkVideoStatus() {
-            const lessonId = getLessonId();
+        async function checkVideoStatus(lessonId) {
             const apiUrl = getApiUrl();
 
             try {
@@ -367,74 +504,74 @@
         }
 
         // عرض معلومات الفيديو
-function displayVideoInfo(videoData) {
-    const videoInfoSection = document.getElementById('videoInfo');
-    const videoDetailsDiv = document.getElementById('videoDetails');
+        function displayVideoInfo(videoData) {
+            const videoInfoSection = document.getElementById('videoInfoSection');
+            const videoDetailsDiv = document.getElementById('videoDetails');
 
-    let infoHtml = `
-        <div class="video-info">
-            <h3>📋 تفاصيل الفيديو:</h3>
-            <p><strong>🔢 رقم الدرس:</strong> ${videoData.lesson_id}</p>
-            <p><strong>⚡ الحالة:</strong> ${getStatusInArabic(videoData.status)}</p>
-            <p><strong>📹 يوجد فيديو:</strong> ${videoData.has_video ? 'نعم ✅' : 'لا ❌'}</p>
-            <p><strong>🔒 محمي:</strong> ${videoData.is_protected ? 'نعم 🔐' : 'لا 🔓'}</p>
-    `;
+            let infoHtml = `
+                <div class="video-info">
+                    <h3>📋 تفاصيل الفيديو:</h3>
+                    <p><strong>🔢 رقم الدرس:</strong> ${videoData.lesson_id}</p>
+                    <p><strong>⚡ الحالة:</strong> ${getStatusInArabic(videoData.status)}</p>
+                    <p><strong>📹 يوجد فيديو:</strong> ${videoData.has_video ? 'نعم ✅' : 'لا ❌'}</p>
+                    <p><strong>🔒 محمي:</strong> ${videoData.is_protected ? 'نعم 🔐' : 'لا 🔓'}</p>
+            `;
 
-    if (videoData.progress !== undefined) {
-        infoHtml += `
-            <p><strong>📊 التقدم:</strong> ${videoData.progress}%</p>
-            <div style="background: #e0e0e0; border-radius: 10px; padding: 3px;">
-                <div style="background: linear-gradient(90deg, #667eea, #764ba2); height: 20px; border-radius: 7px; width: ${videoData.progress}%; transition: width 0.3s;"></div>
-            </div>
-        `;
-    }
-
-    if (videoData.video_info) {
-        infoHtml += `
-            <h4>🎬 معلومات إضافية:</h4>
-            <p><strong>⏱️ المدة:</strong> ${videoData.video_info.duration || 'غير متوفر'}</p>
-            <p><strong>💾 الحجم:</strong> ${videoData.video_info.size || 'غير متوفر'}</p>
-        `;
-    }
-
-    if (videoData.stream_url) {
-        // ✅ التحقق إذا كان الرابط كامل أو نسبي
-        let streamUrl = videoData.stream_url;
-        if (!/^https?:\/\//i.test(streamUrl)) {
-            streamUrl = `${getApiUrl()}${streamUrl}`;
-        }
-
-        currentVideoUrl = streamUrl;
-
-        infoHtml += `
-            <h4>🔗 رابط البث:</h4>
-            <div class="api-url">${streamUrl}</div>
-        `;
-
-        // استخراج الـ token من الرابط
-        try {
-            const url = new URL(streamUrl);
-            const token = url.searchParams.get('token');
-            if (token) {
-                currentVideoToken = token;
+            if (videoData.progress !== undefined) {
                 infoHtml += `
-                    <h4>🎫 رمز الفيديو:</h4>
-                    <div class="token-display">${token}</div>
+                    <p><strong>📊 التقدم:</strong> ${videoData.progress}%</p>
+                    <div style="background: #e0e0e0; border-radius: 10px; padding: 3px;">
+                        <div style="background: linear-gradient(90deg, #667eea, #764ba2); height: 20px; border-radius: 7px; width: ${videoData.progress}%; transition: width 0.3s;"></div>
+                    </div>
                 `;
             }
-        } catch (e) {
-            console.warn("⚠️ لم يتمكن من قراءة URL:", e);
-        }
-    }
 
-    infoHtml += '</div>';
-    videoDetailsDiv.innerHTML = infoHtml;
-    videoInfoSection.style.display = 'block';
-}
+            if (videoData.video_info) {
+                infoHtml += `
+                    <h4>🎬 معلومات إضافية:</h4>
+                    <p><strong>⏱️ المدة:</strong> ${videoData.video_info.duration || 'غير متوفر'}</p>
+                    <p><strong>💾 الحجم:</strong> ${videoData.video_info.size || 'غير متوفر'}</p>
+                `;
+            }
+
+            if (videoData.stream_url) {
+                // التحقق إذا كان الرابط كامل أو نسبي
+                let streamUrl = videoData.stream_url;
+                if (!/^https?:\/\//i.test(streamUrl)) {
+                    streamUrl = `${getApiUrl()}${streamUrl}`;
+                }
+
+                currentVideoUrl = streamUrl;
+
+                infoHtml += `
+                    <h4>🔗 رابط البث:</h4>
+                    <div class="api-url">${streamUrl}</div>
+                `;
+
+                // استخراج الـ token من الرابط
+                try {
+                    const url = new URL(streamUrl);
+                    const token = url.searchParams.get('token');
+                    if (token) {
+                        currentVideoToken = token;
+                        infoHtml += `
+                            <h4>🎫 رمز الفيديو:</h4>
+                            <div class="token-display">${token}</div>
+                        `;
+                    }
+                } catch (e) {
+                    console.warn("⚠️ لم يتمكن من قراءة URL:", e);
+                }
+            }
+
+            infoHtml += '</div>';
+            videoDetailsDiv.innerHTML = infoHtml;
+            videoInfoSection.classList.remove('hidden');
+        }
 
         // دالة تحميل مشغل الفيديو
         async function loadVideoPlayer() {
-            const videoPlayerSection = document.getElementById('videoPlayer');
+            const videoPlayerSection = document.getElementById('videoPlayerSection');
             const playerContent = document.getElementById('playerContent');
 
             if (!currentVideoUrl) {
@@ -455,63 +592,63 @@ function displayVideoInfo(videoData) {
             `;
 
             playerContent.innerHTML = playerHtml;
-            videoPlayerSection.style.display = 'block';
+            videoPlayerSection.classList.remove('hidden');
 
-            // إضافة مستمع لأحداث الفيديو
+            // إضافة مستمعي الأحداث للفيديو
             const video = playerContent.querySelector('video');
-            if (video) {
-                video.addEventListener('loadstart', () => {
-                    showStatus('📡 بدء تحميل الفيديو...', 'info');
-                });
+            const statusP = playerContent.querySelector('p');
 
-                video.addEventListener('canplay', () => {
-                    showStatus('✅ الفيديو جاهز للتشغيل', 'success');
-                });
+            video.addEventListener('loadstart', () => {
+                statusP.innerHTML = '<strong>📡 حالة البث:</strong> بدء التحميل...';
+                showStatus('📡 بدء تحميل الفيديو...', 'info');
+            });
 
-                video.addEventListener('error', (e) => {
-                    showStatus('❌ خطأ في تحميل الفيديو', 'error');
-                    console.error('Video error:', e);
-                });
-            }
+            video.addEventListener('loadedmetadata', () => {
+                statusP.innerHTML = '<strong>📡 حالة البث:</strong> تم تحميل البيانات الوصفية ✅';
+                showStatus('📊 تم تحميل بيانات الفيديو الوصفية', 'success');
+            });
+
+            video.addEventListener('canplay', () => {
+                statusP.innerHTML = '<strong>📡 حالة البث:</strong> جاهز للتشغيل ✅';
+                showStatus('▶️ الفيديو جاهز للتشغيل', 'success');
+            });
+
+            video.addEventListener('play', () => {
+                statusP.innerHTML = '<strong>📡 حالة البث:</strong> قيد التشغيل ▶️';
+                showStatus('▶️ بدء تشغيل الفيديو', 'info');
+            });
+
+            video.addEventListener('pause', () => {
+                statusP.innerHTML = '<strong>📡 حالة البث:</strong> متوقف مؤقتاً ⏸️';
+                showStatus('⏸️ تم إيقاف الفيديو مؤقتاً', 'info');
+            });
+
+            video.addEventListener('error', (e) => {
+                const error = video.error;
+                statusP.innerHTML = '<strong>📡 حالة البث:</strong> خطأ في التحميل ❌';
+                showStatus(`❌ خطأ في تحميل الفيديو: ${error ? error.message : 'خطأ غير معروف'}`, 'error');
+            });
         }
 
-        // دالة ترجمة حالات الفيديو
+        // دالة تحويل حالة الفيديو للعربية
         function getStatusInArabic(status) {
             const statusMap = {
-                'pending': 'في الانتظار ⏳',
-                'processing': 'قيد المعالجة 🔄',
-                'ready': 'جاهز ✅',
-                'failed': 'فشل ❌',
-                'uploaded': 'تم الرفع 📤',
-                'encoding': 'قيد التشفير 🔐'
+                'pending': 'في الانتظار',
+                'processing': 'قيد المعالجة',
+                'ready': 'جاهز',
+                'failed': 'فشل'
             };
             return statusMap[status] || status;
         }
 
-        // دالة تجديد رمز الوصول
-        function refreshVideoToken() {
-        }
-
-        // دالة مسح الكل
-        function clearAll() {
-            document.getElementById('authToken').value = '';
-            document.getElementById('lessonId').value = '1';
-            document.getElementById('videoInfo').style.display = 'none';
-            document.getElementById('videoPlayer').style.display = 'none';
-            document.getElementById('statusSection').innerHTML = '';
-
-            currentAuthToken = '';
+        // دالة مسح اختبار الفيديو
+        function clearVideoTest() {
+            document.getElementById('videoInfoSection').classList.add('hidden');
+            document.getElementById('videoPlayerSection').classList.add('hidden');
             currentVideoToken = '';
             currentVideoUrl = '';
-
-            showStatus('🗑️ تم مسح جميع البيانات', 'info');
+            showStatus('🗑️ تم مسح اختبار الفيديو', 'info');
         }
-
-        // تحميل القيم المحفوظة عند فتح الصفحة
-        window.addEventListener('load', () => {
-            showStatus('🚀 مرحباً بك في اختبار نظام الفيديو!', 'success');
-            showStatus('📝 ادخل Auth Token ورقم الدرس واضغط اختبار سريع', 'info');
-        });
     </script>
 </body>
 </html>
