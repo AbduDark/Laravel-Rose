@@ -249,7 +249,7 @@ class SubscriptionController extends Controller
 
             // إرسال إشعار للطالب
             try {
-                \App\Services\NotificationService::subscriptionApproved($subscription->user_id, $subscription->course_id);
+                NotificationService::subscriptionApproved($subscription->user_id, $subscription->course_id);
             } catch (\Exception $e) {
                 Log::error('Error sending subscription approval notification: ' . $e->getMessage());
             }
@@ -298,7 +298,7 @@ class SubscriptionController extends Controller
             // إرسال إشعار للطالب
             try {
                 $reason = $request->input('admin_notes', 'لم يتم تحديد السبب');
-                \App\Services\NotificationService::subscriptionRejected($subscription->user_id, $subscription->course_id, $reason);
+                NotificationService::subscriptionRejected($subscription->user_id, $subscription->course_id, $reason);
             } catch (\Exception $e) {
                 Log::error('Error sending subscription rejection notification: ' . $e->getMessage());
             }

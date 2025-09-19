@@ -133,14 +133,18 @@ class LessonController extends Controller
             }
 
             // التحقق من حالة الكورس
+// بعد التعديل (سيظهر الرسالة المحددة):
             if (!$course->is_active) {
-                return $this->errorResponse('هذه الدورة غير متاحة حالياً', 403);
+                 return $this->errorResponse([
+                     'ar' => 'هذه الدورة غير متاحة حالياً',
+                       'en' => 'This course is currently unavailable'
+                ], 403);
             }
 
             // التحقق من توافق الجنس
-            if ($course->target_gender !== 'both' && $course->target_gender !== $user->gender) {
-                return $this->errorResponse('هذه الدورة غير متاحة لجنسك', 403);
-            }
+            // if ($course->target_gender !== 'both' && $course->target_gender !== $user->gender) {
+            //     return $this->errorResponse('هذه الدورة غير متاحة لجنسك', 403);
+            // }
 
             // التحقق من الاشتراك النشط
             $isSubscribed = $user->canAccessCourse($courseId);
@@ -323,13 +327,18 @@ class LessonController extends Controller
 
             // التحقق من توافق الجنس
             if ($lesson->target_gender !== 'both' && $lesson->target_gender !== $user->gender) {
-                return $this->errorResponse('هذا الدرس غير متاح لجنسك', 403);
-            }
+    return $this->errorResponse([
+        'ar' => 'هذا الدرس غير متاح لجنسك',
+        'en' => 'This lesson is not available for your gender'
+    ], 403);
+}
 
-            // التحقق من حالة الكورس
-            if (!$lesson->course->is_active) {
-                return $this->errorResponse('هذه الدورة غير نشطة', 403);
-            }
+if (!$lesson->course->is_active) {
+    return $this->errorResponse([
+        'ar' => 'هذه الدورة غير نشطة',
+        'en' => 'This course is not active'
+    ], 403);
+}
 
             // التحقق من الاشتراك إذا لم يكن الدرس مجاني
             $canAccess = $lesson->is_free || $user->canAccessCourse($lesson->course_id);

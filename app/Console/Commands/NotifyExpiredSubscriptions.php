@@ -11,7 +11,6 @@ use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log; 
 use App\Models\User;
-
 /**
  * Class NotifyExpiredSubscriptions
  * @package App\Console\Commands
