@@ -8,7 +8,7 @@
 ## 🔐 المصادقة والأمان
 
 جميع endpoints تتطلب مصادقة Bearer Token:
-```
+``` g
 Authorization: Bearer YOUR_ACCESS_TOKEN
 ```
 
