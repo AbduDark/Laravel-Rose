@@ -74,8 +74,8 @@ class Lesson extends Model
             return true;
         }
 
-        return $this->video_token === $token && 
-               $this->video_token_expires_at && 
+        return $this->video_token === $token &&
+               $this->video_token_expires_at &&
                $this->video_token_expires_at->isFuture();
     }
 
@@ -85,7 +85,7 @@ class Lesson extends Model
     public function generateVideoToken(int $expiresInMinutes = 60): string
     {
         $token = Str::random(64);
-        
+
         $this->update([
             'video_token' => $token,
             'video_token_expires_at' => now()->addMinutes($expiresInMinutes)
@@ -105,7 +105,7 @@ class Lesson extends Model
 
         // إنشاء رمز حماية جديد صالح لمدة ساعة
         $token = $this->generateVideoToken(60);
-        
+
         return route('api.lessons.stream', [
             'lesson' => $this->id,
             'token' => $token
@@ -121,14 +121,14 @@ class Lesson extends Model
             return null;
         }
 
-        if ($this->is_video_protected) {
-            return $this->getProtectedVideoStreamUrl();
+        if (!$this->is_video_protected) {
+            return url("/api/lessons/{$this->id}/stream");
         }
 
-        // للفيديو غير المحمي، استخدم signed route للأمان
-        return URL::temporarySignedRoute('api.lessons.stream', now()->addMinutes(60), [
-            'lesson' => $this->id
-        ]);
+        // إنشاء رمز حماية جديد صالح لمدة ساعة
+        $token = $this->generateVideoToken(60);
+
+        return url("/api/lessons/{$this->id}/stream?token={$token}");
     }
 
     /**
@@ -301,7 +301,7 @@ class Lesson extends Model
     {
         $currentMetadata = $this->video_metadata ?? [];
         $newMetadata = array_merge($currentMetadata, $metadata);
-        
+
         $this->update(['video_metadata' => $newMetadata]);
     }
 }
