@@ -476,35 +476,35 @@ public function upload(Request $request, $lessonId)
     /**
      * التحقق من صلاحية الوصول للدرس
      */
-    private function canAccessLesson($user, Lesson $lesson): bool
-    {
-        if (!$user) {
-            return false;
-        }
+    // private function canAccessLesson($user, Lesson $lesson): bool
+    // {
+    //     if (!$user) {
+    //         return false;
+    //     }
 
-        // المديرين يمكنهم الوصول لكل شيء
-        if ($user->isAdmin()) {
-            return true;
-        }
+    //     // المديرين يمكنهم الوصول لكل شيء
+    //     if ($user->isAdmin()) {
+    //         return true;
+    //     }
 
-        // التحقق من توافق الجنس
-        if ($lesson->target_gender !== 'both' && $lesson->target_gender !== $user->gender) {
-            return false;
-        }
+    //     // التحقق من توافق الجنس
+    //     if ($lesson->target_gender !== 'both' && $lesson->target_gender !== $user->gender) {
+    //         return false;
+    //     }
 
-        // التحقق من حالة الكورس
-        if (!$lesson->course->is_active) {
-            return false;
-        }
+    //     // التحقق من حالة الكورس
+    //     if (!$lesson->course->is_active) {
+    //         return false;
+    //     }
 
-        // الدروس المجانية متاحة للجميع
-        if ($lesson->is_free) {
-            return true;
-        }
+    //     // الدروس المجانية متاحة للجميع
+    //     if ($lesson->is_free) {
+    //         return true;
+    //     }
 
-        // التحقق من الاشتراك
-        return $user->isSubscribedTo($lesson->course_id);
-    }
+    //     // التحقق من الاشتراك
+    //     return $user->isSubscribedTo($lesson->course_id);
+    // }
 
     /**
      * عرض جميع الدروس
@@ -632,32 +632,32 @@ public function upload(Request $request, $lessonId)
     /**
      * التحقق من صلاحية الوصول للدرس
      */
-    // private function canAccessLesson(User $user, Lesson $lesson): bool
-    // {
-    //     // Admin يمكنه الوصول لكل شيء
-    //     if ($user->isAdmin()) {
-    //         return true;
-    //     }
+    private function canAccessLesson(User $user, Lesson $lesson): bool
+    {
+        // Admin يمكنه الوصول لكل شيء
+        if ($user->isAdmin()) {
+            return true;
+        }
 
-    //     // التحقق من توافق الجنس
-    //     if ($lesson->target_gender !== 'both' && $lesson->target_gender !== $user->gender) {
-    //         return false;
-    //     }
+        // التحقق من توافق الجنس
+        if ($lesson->target_gender !== 'both' && $lesson->target_gender !== $user->gender) {
+            return false;
+        }
 
-    //     // التحقق من الدروس المجانية
-    //     if ($lesson->is_free) {
-    //         return true;
-    //     }
+        // التحقق من الدروس المجانية
+        if ($lesson->is_free) {
+            return true;
+        }
 
-    //     // التحقق من الاشتراك
-    //     $hasActiveSubscription = $user->subscriptions()
-    //         ->where('course_id', $lesson->course_id)
-    //         ->where('is_active', true)
-    //         ->where('is_approved', true)
-    //         ->exists();
+        // التحقق من الاشتراك
+        $hasActiveSubscription = $user->subscriptions()
+            ->where('course_id', $lesson->course_id)
+            ->where('is_active', true)
+            ->where('is_approved', true)
+            ->exists();
 
-    //     return $hasActiveSubscription;
-    // }
+        return $hasActiveSubscription;
+    }
 
     /**
      * حذف الفيديو القديم
