@@ -95,7 +95,7 @@ class VideoController extends Controller
             }
 
             $videoPath = storage_path('app/' . $lesson->video_path);
-            
+
             if (!file_exists($videoPath)) {
                 Log::error('Video file not found: ' . $videoPath);
                 return $this->errorResponse('ملف الفيديو غير موجود', 404);
@@ -146,20 +146,20 @@ class VideoController extends Controller
                 while ($bytesRemaining > 0 && !feof($stream)) {
                     $bytesToRead = min($chunkSize, $bytesRemaining);
                     $chunk = fread($stream, $bytesToRead);
-                    
+
                     if ($chunk === false) {
                         break;
                     }
 
                     echo $chunk;
                     $bytesRemaining -= strlen($chunk);
-                    
+
                     if (ob_get_level()) {
                         ob_flush();
                     }
                     flush();
                 }
-                
+
                 fclose($stream);
             }, $statusCode, $headers);
 
@@ -224,8 +224,8 @@ class VideoController extends Controller
                 return $this->errorResponse('الدرس غير موجود', 404);
             }
 
-            if ($lesson->video_path && Storage::exists($lesson->video_path)) {
-                Storage::delete($lesson->video_path);
+            if ($lesson->video_path && Storage::disk('public')->exists($lesson->video_path)) {
+                Storage::disk('public')->delete($lesson->video_path);
             }
 
             $lesson->update([
@@ -317,7 +317,7 @@ class VideoController extends Controller
         if (!$bytes) return null;
 
         $units = ['B', 'KB', 'MB', 'GB'];
-        
+
         for ($i = 0; $bytes > 1024 && $i < count($units) - 1; $i++) {
             $bytes /= 1024;
         }

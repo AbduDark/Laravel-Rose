@@ -26,8 +26,8 @@ class LessonResource extends JsonResource
             'target_gender' => $this->target_gender,
             'can_access' => $canAccess,
             'has_video' => $this->has_video,
-            'video_stream_url' => $this->can_access && $this->has_video
-                ? route('api.video.stream', ['lesson' => $this->id])
+            'video_url' => $this->can_access && $this->has_video
+                ? $this->getVideoDirectUrl()
                 : null,
             'video_duration_formatted' => $this->has_video ? $this->getFormattedDuration() : null,
             'video_size_formatted' => $this->has_video ? $this->getFormattedSize() : null,

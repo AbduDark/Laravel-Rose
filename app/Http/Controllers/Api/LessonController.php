@@ -179,11 +179,11 @@ class LessonController extends Controller
             $lessons->each(function($lesson) use ($user, $isSubscribed) {
                 // إضافة رابط الفيديو إذا كان المستخدم يستطيع الوصول للدرس
                 if ($lesson->can_access && $lesson->has_video) {
-                    $lesson->video_stream_url = route('api.video.stream', ['lesson' => $lesson->id]);
+                    $lesson->video_url = $lesson->getVideoDirectUrl();
                     $lesson->video_duration_formatted = $lesson->getFormattedDuration();
                     $lesson->video_size_formatted = $lesson->getFormattedSize();
                 } else {
-                    $lesson->video_stream_url = null;
+                    $lesson->video_url = null;
                 }
             });
 
@@ -352,12 +352,12 @@ if (!$lesson->course->is_active) {
 
             // إضافة معلومات الوصول للفيديو
             if ($lesson->has_video && $canAccess) {
-                $lesson->video_stream_url = route('api.video.stream', ['lesson' => $lesson->id]);
+                $lesson->video_url = $lesson->getVideoDirectUrl();
                 $lesson->video_duration_formatted = $lesson->getFormattedDuration();
                 $lesson->video_size_formatted = $lesson->getFormattedSize();
                 $lesson->video_status_message = $lesson->getVideoStatusMessage();
             } else {
-                $lesson->video_stream_url = null;
+                $lesson->video_url = null;
             }
 
             return $this->successResponse($lesson, 'تم جلب الدرس بنجاح');

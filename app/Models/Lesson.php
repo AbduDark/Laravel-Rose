@@ -91,22 +91,15 @@ class Lesson extends Model
     }
 
     /**
-     * Get video stream URL with token
+     * Get direct video URL
      */
-    public function getVideoStreamUrl(): string
+    public function getVideoDirectUrl(): string
     {
         if (!$this->hasVideo()) {
             return '';
         }
 
-        $baseUrl = route('api.video.stream', ['lesson' => $this->id]);
-
-        if ($this->is_video_protected) {
-            $token = $this->video_token ?: $this->generateVideoToken();
-            return $baseUrl . '?token=' . $token;
-        }
-
-        return $baseUrl;
+        return url('storage/' . $this->video_path);
     }
 
     /**
@@ -212,8 +205,11 @@ class Lesson extends Model
      */
     public function videoFileExists(): bool
     {
-        $path = $this->getVideoPath();
-        return $path && file_exists($path);
+        if (!$this->video_path) {
+            return false;
+        }
+        
+        return Storage::disk('public')->exists($this->video_path);
     }
 
     /**
@@ -225,20 +221,12 @@ class Lesson extends Model
             return true;
         }
 
-        $deleted = true;
-
-        // حذف الملف الأساسي
-        if (Storage::exists($this->video_path)) {
-            $deleted = Storage::delete($this->video_path);
+        // حذف الملف من المجلد العام
+        if (Storage::disk('public')->exists($this->video_path)) {
+            return Storage::disk('public')->delete($this->video_path);
         }
 
-        // حذف مجلد الفيديو المحمي إذا وجد
-        $protectedDir = storage_path("app/private_videos/lesson_{$this->id}");
-        if (is_dir($protectedDir)) {
-            $this->deleteDirectory($protectedDir);
-        }
-
-        return $deleted;
+        return true;
     }
 
     /**
