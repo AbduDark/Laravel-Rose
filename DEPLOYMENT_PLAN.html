@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x62f;&#x644;&#x64a;&#x644; &#x62f;&#x64a;&#x628;&#x644;&#x648;&#x645;&#x64a;&#x646;&#x62a; Rose Academy &#x627;&#x644;&#x634;&#x627;&#x645;&#x644; - &#x645;&#x646; &#x627;&#x644;&#x635;&#x641;&#x631; &#x644;&#x644;&#x646;&#x647;&#x627;&#x64a;&#x629;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="دليل-ديبلومينت-rose-academy-الشامل---من-الصفر-للنهاية">دليل ديبلومينت Rose Academy الشامل - من الصفر للنهاية</h1>
+<h2 id="نظرة-عامة-على-المشروع">نظرة عامة على المشروع</h2>
+<ul>
+<li><strong>المشروع</strong>: Rose Academy</li>
+<li><strong>الدومين الرئيسي</strong>: <a href="https://www.rose-academy.com/">https://www.rose-academy.com/</a></li>
+<li><strong>API Subdomain</strong>: <a href="https://api.rose-academy.com/">https://api.rose-academy.com/</a></li>
+<li><strong>Backend</strong>: Laravel API (موجود حالياً)</li>
+<li><strong>Frontend</strong>: React (سيتم تثبيته)</li>
+<li><strong>قاعدة البيانات</strong>: MySQL</li>
+<li><strong>Web Server</strong>: Nginx</li>
+<li><strong>المنصة</strong>: Replit</li>
+</ul>
+<hr>
+<h2 id="-المتطلبات-والتجهيز-الأولي">📋 المتطلبات والتجهيز الأولي</h2>
+<h3 id="1-تحديث-النظام">1. تحديث النظام</h3>
+<pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt upgrade -y
+</code></pre>
+<h3 id="2-تثبيت-المتطلبات-الأساسية">2. تثبيت المتطلبات الأساسية</h3>
+<pre><code class="language-bash"><span class="hljs-comment"># تثبيت Nginx</span>
+sudo apt install -y nginx
+
+<span class="hljs-comment"># تثبيت MySQL</span>
+sudo apt install -y mysql-server
+
+<span class="hljs-comment"># تثبيت Redis</span>
+sudo apt install -y redis-server
+
+<span class="hljs-comment"># تثبيت PHP 8.2 والإضافات المطلوبة</span>
+sudo apt install -y php8.2-fpm php8.2-mysql php8.2-redis php8.2-mbstring \
+php8.2-xml php8.2-curl php8.2-zip php8.2-bcmath php8.2-intl php8.2-gd \
+php8.2-json php8.2-tokenizer php8.2-fileinfo php8.2-dom php8.2-simplexml
+
+<span class="hljs-comment"># تثبيت Node.js و npm</span>
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+<span class="hljs-comment"># تثبيت Composer</span>
+curl -sS https://getcomposer.org/installer | php
+sudo <span class="hljs-built_in">mv</span> composer.phar /usr/local/bin/composer
+</code></pre>
+<h3 id="3-إعداد-الخدمات">3. إعداد الخدمات</h3>
+<pre><code class="language-bash"><span class="hljs-comment"># تفعيل وتشغيل جميع الخدمات</span>
+sudo systemctl <span class="hljs-built_in">enable</span> nginx
+sudo systemctl <span class="hljs-built_in">enable</span> mysql
+sudo systemctl <span class="hljs-built_in">enable</span> redis-server
+sudo systemctl <span class="hljs-built_in">enable</span> php8.2-fpm
+
+sudo systemctl start nginx
+sudo systemctl start mysql
+sudo systemctl start redis-server
+sudo systemctl start php8.2-fpm
+</code></pre>
+<hr>
+<h2 id="️-إعداد-قاعدة-البيانات-mysql">🗄️ إعداد قاعدة البيانات MySQL</h2>
+<h3 id="1-تأمين-mysql">1. تأمين MySQL</h3>
+<pre><code class="language-bash">sudo mysql_secure_installation
+</code></pre>
+<h3 id="2-إنشاء-قاعدة-البيانات-والمستخدم">2. إنشاء قاعدة البيانات والمستخدم</h3>
+<pre><code class="language-bash">sudo mysql -u root -p
+</code></pre>
+<pre><code class="language-sql"><span class="hljs-comment">-- إنشاء قاعدة البيانات</span>
+<span class="hljs-keyword">CREATE</span> DATABASE rose_academy_prod <span class="hljs-type">CHARACTER</span> <span class="hljs-keyword">SET</span> utf8mb4 <span class="hljs-keyword">COLLATE</span> utf8mb4_unicode_ci;
+
+<span class="hljs-comment">-- إنشاء مستخدم مخصص</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">USER</span> <span class="hljs-string">&#x27;rose_admin&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;كلمة_مرور_قوية_هنا&#x27;</span>;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> PRIVILEGES <span class="hljs-keyword">ON</span> rose_academy_prod.<span class="hljs-operator">*</span> <span class="hljs-keyword">TO</span> <span class="hljs-string">&#x27;rose_admin&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span>;
+FLUSH PRIVILEGES;
+EXIT;
+</code></pre>
+<h3 id="3-تحسينات-mysql-للإنتاج">3. تحسينات MySQL للإنتاج</h3>
+<pre><code class="language-bash">sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+</code></pre>
+<p>إضافة التحسينات التالية:</p>
+<pre><code class="language-ini"><span class="hljs-section">[mysqld]</span>
+<span class="hljs-attr">innodb_buffer_pool_size</span> = <span class="hljs-number">1</span>G
+<span class="hljs-attr">max_connections</span> = <span class="hljs-number">200</span>
+<span class="hljs-attr">query_cache_size</span> = <span class="hljs-number">64</span>M
+<span class="hljs-attr">query_cache_type</span> = <span class="hljs-number">1</span>
+<span class="hljs-attr">slow_query_log</span> = <span class="hljs-number">1</span>
+<span class="hljs-attr">slow_query_log_file</span> = /var/log/mysql/slow.log
+<span class="hljs-attr">long_query_time</span> = <span class="hljs-number">2</span>
+</code></pre>
+<pre><code class="language-bash">sudo systemctl restart mysql
+</code></pre>
+<hr>
+<h2 id="-إعداد-laravel-api-للإنتاج">🚀 إعداد Laravel API للإنتاج</h2>
+<h3 id="1-تحديث-ملف-البيئة">1. تحديث ملف البيئة</h3>
+<pre><code class="language-bash"><span class="hljs-built_in">cd</span> /home/runner/rose-academy
+<span class="hljs-built_in">cp</span> .env.example .<span class="hljs-built_in">env</span>
+nano .<span class="hljs-built_in">env</span>
+</code></pre>
+<p>محتوى ملف <code>.env</code> للإنتاج:</p>
+<pre><code class="language-env">APP_NAME=&quot;Rose Academy&quot;
+APP_ENV=production
+APP_KEY=base64:مفتاح_التطبيق_هنا
+APP_DEBUG=false
+APP_URL=https://api.rose-academy.com
+FRONTEND_URL=https://www.rose-academy.com
+
+LOG_CHANNEL=stack
+LOG_DEPRECATIONS_CHANNEL=null
+LOG_LEVEL=error
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=rose_academy_prod
+DB_USERNAME=rose_admin
+DB_PASSWORD=كلمة_مرور_قاعدة_البيانات
+
+BROADCAST_DRIVER=log
+CACHE_DRIVER=redis
+FILESYSTEM_DISK=local
+QUEUE_CONNECTION=redis
+SESSION_DRIVER=redis
+SESSION_LIFETIME=120
+
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+
+MAIL_MAILER=smtp
+MAIL_HOST=mailpit
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS=&quot;hello@example.com&quot;
+MAIL_FROM_NAME=&quot;${APP_NAME}&quot;
+</code></pre>
+<h3 id="2-تشغيل-أوامر-laravel-للإنتاج">2. تشغيل أوامر Laravel للإنتاج</h3>
+<pre><code class="language-bash"><span class="hljs-built_in">cd</span> /home/runner/rose-academy
+
+<span class="hljs-comment"># تثبيت التبعيات</span>
+composer install --optimize-autoloader --no-dev
+
+<span class="hljs-comment"># إنشاء مفتاح التطبيق</span>
+php artisan key:generate
+
+<span class="hljs-comment"># تنظيف الكاش</span>
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+php artisan cache:clear
+
+<span class="hljs-comment"># إنشاء كاش للإنتاج</span>
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+
+<span class="hljs-comment"># تشغيل المايجريشن</span>
+php artisan migrate --force
+
+<span class="hljs-comment"># تشغيل Seeders (اختياري)</span>
+php artisan db:seed --force
+
+<span class="hljs-comment"># إعداد storage link</span>
+php artisan storage:<span class="hljs-built_in">link</span>
+
+<span class="hljs-comment"># إعداد الصلاحيات</span>
+sudo <span class="hljs-built_in">chown</span> -R www-data:www-data storage bootstrap/cache
+sudo <span class="hljs-built_in">chmod</span> -R 775 storage bootstrap/cache
+</code></pre>
+<hr>
+<h2 id="️-إعداد-react-frontend">⚛️ إعداد React Frontend</h2>
+<h3 id="1-إنشاء-مشروع-react">1. إنشاء مشروع React</h3>
+<pre><code class="language-bash"><span class="hljs-built_in">cd</span> /home/runner/rose-academy
+npx create-react-app frontend --template typescript
+<span class="hljs-built_in">cd</span> frontend
+npm install axios @types/axios
+</code></pre>
+<h3 id="2-إعداد-api-client">2. إعداد API Client</h3>
+<pre><code class="language-bash"><span class="hljs-built_in">mkdir</span> -p src/config src/types src/services
+</code></pre>
+<p>إنشاء ملف إعدادات API:</p>
+<pre><code class="language-typescript"><span class="hljs-comment">// src/config/api.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">API_BASE_URL</span> = process.<span class="hljs-property">env</span>.<span class="hljs-property">REACT_APP_API_URL</span> || <span class="hljs-string">&#x27;https://api.rose-academy.com/api&#x27;</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">API_ENDPOINTS</span> = {
+  <span class="hljs-attr">auth</span>: {
+    <span class="hljs-attr">login</span>: <span class="hljs-string">&#x27;/auth/login&#x27;</span>,
+    <span class="hljs-attr">register</span>: <span class="hljs-string">&#x27;/auth/register&#x27;</span>,
+    <span class="hljs-attr">logout</span>: <span class="hljs-string">&#x27;/auth/logout&#x27;</span>,
+    <span class="hljs-attr">profile</span>: <span class="hljs-string">&#x27;/auth/profile&#x27;</span>,
+    <span class="hljs-attr">refresh</span>: <span class="hljs-string">&#x27;/auth/refresh&#x27;</span>,
+  },
+  <span class="hljs-attr">courses</span>: <span class="hljs-string">&#x27;/courses&#x27;</span>,
+  <span class="hljs-attr">lessons</span>: <span class="hljs-string">&#x27;/lessons&#x27;</span>,
+  <span class="hljs-attr">subscriptions</span>: <span class="hljs-string">&#x27;/subscriptions&#x27;</span>,
+  <span class="hljs-attr">users</span>: <span class="hljs-string">&#x27;/users&#x27;</span>,
+  <span class="hljs-attr">notifications</span>: <span class="hljs-string">&#x27;/notifications&#x27;</span>,
+  <span class="hljs-attr">comments</span>: <span class="hljs-string">&#x27;/comments&#x27;</span>,
+  <span class="hljs-attr">ratings</span>: <span class="hljs-string">&#x27;/ratings&#x27;</span>,
+  <span class="hljs-attr">favorites</span>: <span class="hljs-string">&#x27;/favorites&#x27;</span>,
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">HEADERS</span> = {
+  <span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&#x27;application/json&#x27;</span>,
+  <span class="hljs-string">&#x27;Accept&#x27;</span>: <span class="hljs-string">&#x27;application/json&#x27;</span>,
+  <span class="hljs-string">&#x27;X-Requested-With&#x27;</span>: <span class="hljs-string">&#x27;XMLHttpRequest&#x27;</span>,
+};
+</code></pre>
+<h3 id="3-إعداد-axios-client">3. إعداد Axios Client</h3>
+<pre><code class="language-typescript"><span class="hljs-comment">// src/services/httpClient.ts</span>
+<span class="hljs-keyword">import</span> axios, { <span class="hljs-title class_">AxiosInstance</span>, <span class="hljs-title class_">AxiosRequestConfig</span>, <span class="hljs-title class_">AxiosResponse</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;axios&#x27;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-variable constant_">API_BASE_URL</span>, <span class="hljs-variable constant_">HEADERS</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../config/api&#x27;</span>;
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">HttpClient</span> {
+  <span class="hljs-keyword">private</span> <span class="hljs-attr">instance</span>: <span class="hljs-title class_">AxiosInstance</span>;
+
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">instance</span> = axios.<span class="hljs-title function_">create</span>({
+      <span class="hljs-attr">baseURL</span>: <span class="hljs-variable constant_">API_BASE_URL</span>,
+      <span class="hljs-attr">headers</span>: <span class="hljs-variable constant_">HEADERS</span>,
+      <span class="hljs-attr">timeout</span>: <span class="hljs-number">10000</span>,
+    });
+
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setupInterceptors</span>();
+  }
+
+  <span class="hljs-keyword">private</span> <span class="hljs-title function_">setupInterceptors</span>(): <span class="hljs-built_in">void</span> {
+    <span class="hljs-comment">// Request interceptor</span>
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">instance</span>.<span class="hljs-property">interceptors</span>.<span class="hljs-property">request</span>.<span class="hljs-title function_">use</span>(
+      <span class="hljs-function">(<span class="hljs-params">config</span>) =&gt;</span> {
+        <span class="hljs-keyword">const</span> token = <span class="hljs-variable language_">localStorage</span>.<span class="hljs-title function_">getItem</span>(<span class="hljs-string">&#x27;auth_token&#x27;</span>);
+        <span class="hljs-keyword">if</span> (token) {
+          config.<span class="hljs-property">headers</span>.<span class="hljs-property">Authorization</span> = <span class="hljs-string">`Bearer <span class="hljs-subst">${token}</span>`</span>;
+        }
+        <span class="hljs-keyword">return</span> config;
+      },
+      <span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">reject</span>(error)
+    );
+
+    <span class="hljs-comment">// Response interceptor</span>
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">instance</span>.<span class="hljs-property">interceptors</span>.<span class="hljs-property">response</span>.<span class="hljs-title function_">use</span>(
+      <span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> response,
+      <span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {
+        <span class="hljs-keyword">if</span> (error.<span class="hljs-property">response</span>?.<span class="hljs-property">status</span> === <span class="hljs-number">401</span>) {
+          <span class="hljs-variable language_">localStorage</span>.<span class="hljs-title function_">removeItem</span>(<span class="hljs-string">&#x27;auth_token&#x27;</span>);
+          <span class="hljs-variable language_">window</span>.<span class="hljs-property">location</span>.<span class="hljs-property">href</span> = <span class="hljs-string">&#x27;/login&#x27;</span>;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">reject</span>(error);
+      }
+    );
+  }
+
+  <span class="hljs-keyword">public</span> get&lt;T = <span class="hljs-built_in">any</span>&gt;(<span class="hljs-attr">url</span>: <span class="hljs-built_in">string</span>, config?: <span class="hljs-title class_">AxiosRequestConfig</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">AxiosResponse</span>&lt;T&gt;&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">instance</span>.<span class="hljs-title function_">get</span>(url, config);
+  }
+
+  <span class="hljs-keyword">public</span> post&lt;T = <span class="hljs-built_in">any</span>&gt;(<span class="hljs-attr">url</span>: <span class="hljs-built_in">string</span>, data?: <span class="hljs-built_in">any</span>, config?: <span class="hljs-title class_">AxiosRequestConfig</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">AxiosResponse</span>&lt;T&gt;&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">instance</span>.<span class="hljs-title function_">post</span>(url, data, config);
+  }
+
+  <span class="hljs-keyword">public</span> put&lt;T = <span class="hljs-built_in">any</span>&gt;(<span class="hljs-attr">url</span>: <span class="hljs-built_in">string</span>, data?: <span class="hljs-built_in">any</span>, config?: <span class="hljs-title class_">AxiosRequestConfig</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">AxiosResponse</span>&lt;T&gt;&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">instance</span>.<span class="hljs-title function_">put</span>(url, data, config);
+  }
+
+  <span class="hljs-keyword">public</span> <span class="hljs-keyword">delete</span>&lt;T = <span class="hljs-built_in">any</span>&gt;(<span class="hljs-attr">url</span>: <span class="hljs-built_in">string</span>, config?: <span class="hljs-title class_">AxiosRequestConfig</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">AxiosResponse</span>&lt;T&gt;&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">instance</span>.<span class="hljs-title function_">delete</span>(url, config);
+  }
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">HttpClient</span>();
+</code></pre>
+<h3 id="4-تحديث-packagejson">4. تحديث package.json</h3>
+<pre><code class="language-bash"><span class="hljs-built_in">cd</span> /home/runner/rose-academy/frontend
+</code></pre>
+<p>إضافة scripts للبناء:</p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;build:prod&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;GENERATE_SOURCEMAP=false REACT_APP_API_URL=https://api.rose-academy.com/api npm run build&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;build:staging&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;REACT_APP_API_URL=https://api.rose-academy.com/api npm run build&quot;</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<h3 id="5-بناء-المشروع-للإنتاج">5. بناء المشروع للإنتاج</h3>
+<pre><code class="language-bash"><span class="hljs-built_in">cd</span> /home/runner/rose-academy/frontend
+npm run build:prod
+
+<span class="hljs-comment"># إعداد الصلاحيات</span>
+sudo <span class="hljs-built_in">chown</span> -R www-data:www-data build/
+</code></pre>
+<hr>
+<h2 id="-إعداد-nginx-مع-subdomains">🌐 إعداد Nginx مع Subdomains</h2>
+<h3 id="1-إنشاء-ملف-تكوين-nginx">1. إنشاء ملف تكوين Nginx</h3>
+<pre><code class="language-bash">sudo nano /etc/nginx/sites-available/rose-academy
+</code></pre>
+<p>محتوى ملف التكوين:</p>
+<pre><code class="language-nginx"><span class="hljs-comment"># إعدادات عامة</span>
+<span class="hljs-section">upstream</span> php-fpm {
+    <span class="hljs-attribute">server</span> <span class="hljs-number">127.0.0.1:9000</span>;
+}
+
+<span class="hljs-comment"># Rate Limiting</span>
+<span class="hljs-attribute">limit_req_zone</span> <span class="hljs-variable">$binary_remote_addr</span> zone=api:<span class="hljs-number">10m</span> rate=60r/m;
+<span class="hljs-attribute">limit_req_zone</span> <span class="hljs-variable">$binary_remote_addr</span> zone=login:<span class="hljs-number">10m</span> rate=5r/m;
+<span class="hljs-attribute">limit_req_zone</span> <span class="hljs-variable">$binary_remote_addr</span> zone=general:<span class="hljs-number">10m</span> rate=100r/m;
+
+<span class="hljs-comment"># Main Website (Frontend)</span>
+<span class="hljs-section">server</span> {
+    <span class="hljs-attribute">listen</span> <span class="hljs-number">5000</span>;
+    <span class="hljs-attribute">server_name</span> www.rose-academy.com rose-academy.com;
+    <span class="hljs-attribute">root</span> /home/runner/rose-academy/frontend/build;
+    <span class="hljs-attribute">index</span> index.html;
+
+    <span class="hljs-comment"># Security Headers</span>
+    <span class="hljs-attribute">add_header</span> X-Frame-Options <span class="hljs-string">&quot;SAMEORIGIN&quot;</span> always;
+    <span class="hljs-attribute">add_header</span> X-XSS-Protection <span class="hljs-string">&quot;1; mode=block&quot;</span> always;
+    <span class="hljs-attribute">add_header</span> X-Content-Type-Options <span class="hljs-string">&quot;nosniff&quot;</span> always;
+    <span class="hljs-attribute">add_header</span> Referrer-Policy <span class="hljs-string">&quot;no-referrer-when-downgrade&quot;</span> always;
+    <span class="hljs-attribute">add_header</span> Content-Security-Policy <span class="hljs-string">&quot;default-src &#x27;self&#x27; https: data: blob: &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27;&quot;</span> always;
+    <span class="hljs-attribute">add_header</span> Strict-Transport-Security <span class="hljs-string">&quot;max-age=31536000; includeSubDomains&quot;</span> always;
+
+    <span class="hljs-comment"># Rate limiting for general requests</span>
+    <span class="hljs-attribute">limit_req</span> zone=general burst=<span class="hljs-number">50</span> nodelay;
+
+    <span class="hljs-comment"># Gzip compression</span>
+    <span class="hljs-attribute">gzip</span> <span class="hljs-literal">on</span>;
+    <span class="hljs-attribute">gzip_vary</span> <span class="hljs-literal">on</span>;
+    <span class="hljs-attribute">gzip_comp_level</span> <span class="hljs-number">6</span>;
+    <span class="hljs-attribute">gzip_types</span>
+        text/plain
+        text/css
+        text/xml
+        text/javascript
+        application/json
+        application/javascript
+        application/xml+rss
+        application/atom+xml
+        image/svg+xml;
+
+    <span class="hljs-comment"># Static assets caching</span>
+    <span class="hljs-section">location</span> <span class="hljs-regexp">~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$</span> {
+        <span class="hljs-attribute">expires</span> <span class="hljs-number">1y</span>;
+        <span class="hljs-attribute">add_header</span> Cache-Control <span class="hljs-string">&quot;public, immutable&quot;</span>;
+        <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> =<span class="hljs-number">404</span>;
+    }
+
+    <span class="hljs-comment"># React App routing</span>
+    <span class="hljs-section">location</span> / {
+        <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ /index.html;
+        <span class="hljs-attribute">add_header</span> Cache-Control <span class="hljs-string">&quot;no-cache, no-store, must-revalidate&quot;</span>;
+    }
+
+    <span class="hljs-comment"># Health check</span>
+    <span class="hljs-section">location</span> /health {
+        <span class="hljs-attribute">access_log</span> <span class="hljs-literal">off</span>;
+        <span class="hljs-attribute">return</span> <span class="hljs-number">200</span> <span class="hljs-string">&quot;healthy\n&quot;</span>;
+        <span class="hljs-attribute">add_header</span> Content-Type text/plain;
+    }
+
+    <span class="hljs-comment"># Security: Block access to hidden files</span>
+    <span class="hljs-section">location</span> <span class="hljs-regexp">~ /\.</span> {
+        <span class="hljs-attribute">deny</span> all;
+        <span class="hljs-attribute">access_log</span> <span class="hljs-literal">off</span>;
+        <span class="hljs-attribute">log_not_found</span> <span class="hljs-literal">off</span>;
+    }
+}
+
+<span class="hljs-comment"># API Subdomain</span>
+<span class="hljs-section">server</span> {
+    <span class="hljs-attribute">listen</span> <span class="hljs-number">5000</span>;
+    <span class="hljs-attribute">server_name</span> api.rose-academy.com;
+    <span class="hljs-attribute">root</span> /home/runner/rose-academy/public;
+    <span class="hljs-attribute">index</span> index.php;
+
+    <span class="hljs-comment"># Security Headers for API</span>
+    <span class="hljs-attribute">add_header</span> X-Frame-Options <span class="hljs-string">&quot;DENY&quot;</span> always;
+    <span class="hljs-attribute">add_header</span> X-Content-Type-Options <span class="hljs-string">&quot;nosniff&quot;</span> always;
+    <span class="hljs-attribute">add_header</span> X-XSS-Protection <span class="hljs-string">&quot;1; mode=block&quot;</span> always;
+    <span class="hljs-attribute">add_header</span> Referrer-Policy <span class="hljs-string">&quot;strict-origin-when-cross-origin&quot;</span> always;
+
+    <span class="hljs-comment"># CORS Headers</span>
+    <span class="hljs-attribute">add_header</span> Access-Control-Allow-Origin <span class="hljs-string">&quot;https://www.rose-academy.com&quot;</span> always;
+    <span class="hljs-attribute">add_header</span> Access-Control-Allow-Methods <span class="hljs-string">&quot;GET, POST, PUT, DELETE, OPTIONS&quot;</span> always;
+    <span class="hljs-attribute">add_header</span> Access-Control-Allow-Headers <span class="hljs-string">&quot;Authorization, Content-Type, Accept, X-Requested-With&quot;</span> always;
+    <span class="hljs-attribute">add_header</span> Access-Control-Allow-Credentials <span class="hljs-string">&quot;true&quot;</span> always;
+    <span class="hljs-attribute">add_header</span> Access-Control-Max-Age <span class="hljs-string">&quot;86400&quot;</span> always;
+
+    <span class="hljs-comment"># Handle preflight requests</span>
+    <span class="hljs-attribute">if</span> (<span class="hljs-variable">$request_method</span> = <span class="hljs-string">&#x27;OPTIONS&#x27;</span>) {
+        <span class="hljs-attribute">add_header</span> Access-Control-Allow-Origin <span class="hljs-string">&quot;https://www.rose-academy.com&quot;</span> always;
+        <span class="hljs-attribute">add_header</span> Access-Control-Allow-Methods <span class="hljs-string">&quot;GET, POST, PUT, DELETE, OPTIONS&quot;</span> always;
+        <span class="hljs-attribute">add_header</span> Access-Control-Allow-Headers <span class="hljs-string">&quot;Authorization, Content-Type, Accept, X-Requested-With&quot;</span> always;
+        <span class="hljs-attribute">add_header</span> Access-Control-Allow-Credentials <span class="hljs-string">&quot;true&quot;</span> always;
+        <span class="hljs-attribute">add_header</span> Access-Control-Max-Age <span class="hljs-string">&quot;86400&quot;</span> always;
+        <span class="hljs-attribute">add_header</span> Content-Length <span class="hljs-number">0</span>;
+        <span class="hljs-attribute">add_header</span> Content-Type text/plain;
+        <span class="hljs-attribute">return</span> <span class="hljs-number">204</span>;
+    }
+
+    <span class="hljs-comment"># General API rate limiting</span>
+    <span class="hljs-attribute">limit_req</span> zone=api burst=<span class="hljs-number">30</span> nodelay;
+
+    <span class="hljs-comment"># API routes</span>
+    <span class="hljs-section">location</span> /api {
+        <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ /index.php?<span class="hljs-variable">$query_string</span>;
+    }
+
+    <span class="hljs-comment"># Authentication endpoints with stricter rate limiting</span>
+    <span class="hljs-section">location</span> /api/auth {
+        <span class="hljs-attribute">limit_req</span> zone=login burst=<span class="hljs-number">10</span> nodelay;
+        <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ /index.php?<span class="hljs-variable">$query_string</span>;
+    }
+
+    <span class="hljs-comment"># PHP processing</span>
+    <span class="hljs-section">location</span> <span class="hljs-regexp">~ \.php$</span> {
+        <span class="hljs-attribute">include</span> fastcgi_params;
+        <span class="hljs-attribute">fastcgi_param</span> SCRIPT_FILENAME <span class="hljs-variable">$document_root</span><span class="hljs-variable">$fastcgi_script_name</span>;
+        <span class="hljs-attribute">fastcgi_param</span> PATH_INFO <span class="hljs-variable">$fastcgi_path_info</span>;
+        <span class="hljs-attribute">fastcgi_pass</span> php-fpm;
+        <span class="hljs-attribute">fastcgi_index</span> index.php;
+        <span class="hljs-attribute">fastcgi_hide_header</span> X-Powered-By;
+        
+        <span class="hljs-comment"># PHP-FPM timeout settings</span>
+        <span class="hljs-attribute">fastcgi_connect_timeout</span> <span class="hljs-number">60s</span>;
+        <span class="hljs-attribute">fastcgi_send_timeout</span> <span class="hljs-number">180s</span>;
+        <span class="hljs-attribute">fastcgi_read_timeout</span> <span class="hljs-number">180s</span>;
+        <span class="hljs-attribute">fastcgi_buffer_size</span> <span class="hljs-number">128k</span>;
+        <span class="hljs-attribute">fastcgi_buffers</span> <span class="hljs-number">4</span> <span class="hljs-number">256k</span>;
+        <span class="hljs-attribute">fastcgi_busy_buffers_size</span> <span class="hljs-number">256k</span>;
+        <span class="hljs-attribute">fastcgi_temp_file_write_size</span> <span class="hljs-number">256k</span>;
+    }
+
+    <span class="hljs-comment"># Storage files (videos, images, documents)</span>
+    <span class="hljs-section">location</span> /storage {
+        <span class="hljs-attribute">alias</span> /home/runner/rose-academy/storage/app/public;
+        <span class="hljs-attribute">expires</span> <span class="hljs-number">1y</span>;
+        <span class="hljs-attribute">add_header</span> Cache-Control <span class="hljs-string">&quot;public, immutable&quot;</span>;
+        
+        <span class="hljs-comment"># Video streaming support</span>
+        <span class="hljs-section">location</span> <span class="hljs-regexp">~* \.(mp4|webm|ogg|avi|mov)$</span> {
+            <span class="hljs-attribute">add_header</span> Access-Control-Allow-Origin <span class="hljs-string">&quot;https://www.rose-academy.com&quot;</span>;
+            <span class="hljs-attribute">add_header</span> Cache-Control <span class="hljs-string">&quot;public, max-age=31536000&quot;</span>;
+            <span class="hljs-comment"># Enable range requests for video streaming</span>
+            <span class="hljs-attribute">add_header</span> Accept-Ranges bytes;
+        }
+    }
+
+    <span class="hljs-comment"># API Health check</span>
+    <span class="hljs-section">location</span> /api/health {
+        <span class="hljs-attribute">access_log</span> <span class="hljs-literal">off</span>;
+        <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> /index.php?<span class="hljs-variable">$query_string</span>;
+    }
+
+    <span class="hljs-comment"># PHP-FPM status (for monitoring)</span>
+    <span class="hljs-section">location</span> <span class="hljs-regexp">~ ^/(status|ping)$</span> {
+        <span class="hljs-attribute">access_log</span> <span class="hljs-literal">off</span>;
+        <span class="hljs-attribute">allow</span> <span class="hljs-number">127.0.0.1</span>;
+        <span class="hljs-attribute">deny</span> all;
+        <span class="hljs-attribute">fastcgi_param</span> SCRIPT_FILENAME <span class="hljs-variable">$document_root</span><span class="hljs-variable">$fastcgi_script_name</span>;
+        <span class="hljs-attribute">fastcgi_index</span> index.php;
+        <span class="hljs-attribute">include</span> fastcgi_params;
+        <span class="hljs-attribute">fastcgi_pass</span> php-fpm;
+    }
+
+    <span class="hljs-comment"># Block access to sensitive files</span>
+    <span class="hljs-section">location</span> <span class="hljs-regexp">~ /\.(env|git|svn)</span> {
+        <span class="hljs-attribute">deny</span> all;
+        <span class="hljs-attribute">access_log</span> <span class="hljs-literal">off</span>;
+        <span class="hljs-attribute">log_not_found</span> <span class="hljs-literal">off</span>;
+    }
+
+    <span class="hljs-section">location</span> <span class="hljs-regexp">~ /(vendor|tests|database|resources/views)</span> {
+        <span class="hljs-attribute">deny</span> all;
+        <span class="hljs-attribute">access_log</span> <span class="hljs-literal">off</span>;
+        <span class="hljs-attribute">log_not_found</span> <span class="hljs-literal">off</span>;
+    }
+}
+</code></pre>
+<h3 id="2-تفعيل-الموقع">2. تفعيل الموقع</h3>
+<pre><code class="language-bash"><span class="hljs-comment"># إنشاء رابط رمزي</span>
+sudo <span class="hljs-built_in">ln</span> -s /etc/nginx/sites-available/rose-academy /etc/nginx/sites-enabled/
+
+<span class="hljs-comment"># حذف الموقع الافتراضي</span>
+sudo <span class="hljs-built_in">rm</span> -f /etc/nginx/sites-enabled/default
+
+<span class="hljs-comment"># اختبار التكوين</span>
+sudo nginx -t
+
+<span class="hljs-comment"># إعادة تشغيل Nginx</span>
+sudo systemctl restart nginx
+</code></pre>
+<hr>
+<h2 id="-تحسينات-php-fpm">🔧 تحسينات PHP-FPM</h2>
+<h3 id="1-تحسين-إعدادات-php-fpm">1. تحسين إعدادات PHP-FPM</h3>
+<pre><code class="language-bash">sudo nano /etc/php/8.2/fpm/pool.d/www.conf
+</code></pre>
+<pre><code class="language-ini"><span class="hljs-section">[www]</span>
+<span class="hljs-attr">user</span> = www-data
+<span class="hljs-attr">group</span> = www-data
+
+<span class="hljs-attr">listen</span> = <span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">9000</span>
+<span class="hljs-attr">listen.owner</span> = www-data
+<span class="hljs-attr">listen.group</span> = www-data
+<span class="hljs-attr">listen.mode</span> = <span class="hljs-number">0660</span>
+
+<span class="hljs-attr">pm</span> = dynamic
+<span class="hljs-attr">pm.max_children</span> = <span class="hljs-number">50</span>
+<span class="hljs-attr">pm.start_servers</span> = <span class="hljs-number">10</span>
+<span class="hljs-attr">pm.min_spare_servers</span> = <span class="hljs-number">5</span>
+<span class="hljs-attr">pm.max_spare_servers</span> = <span class="hljs-number">35</span>
+<span class="hljs-attr">pm.max_requests</span> = <span class="hljs-number">500</span>
+
+<span class="hljs-attr">pm.status_path</span> = /status
+<span class="hljs-attr">ping.path</span> = /ping
+<span class="hljs-attr">ping.response</span> = pong
+
+<span class="hljs-attr">slowlog</span> = /var/log/php8.<span class="hljs-number">2</span>-fpm-slow.log
+<span class="hljs-attr">request_slowlog_timeout</span> = <span class="hljs-number">10</span>s
+
+<span class="hljs-attr">catch_workers_output</span> = <span class="hljs-literal">yes</span>
+<span class="hljs-attr">decorate_workers_output</span> = <span class="hljs-literal">no</span>
+
+env<span class="hljs-section">[HOSTNAME]</span> = $HOSTNAME
+env<span class="hljs-section">[PATH]</span> = /usr/local/bin:/usr/bin:/bin
+env<span class="hljs-section">[TMP]</span> = /tmp
+env<span class="hljs-section">[TMPDIR]</span> = /tmp
+env<span class="hljs-section">[TEMP]</span> = /tmp
+
+php_admin_value<span class="hljs-section">[sendmail_path]</span> = /usr/sbin/sendmail -t -i -f www@my.domain.com
+php_flag<span class="hljs-section">[display_errors]</span> = off
+php_admin_value<span class="hljs-section">[error_log]</span> = /var/log/php8.2-fpm.log
+php_admin_flag<span class="hljs-section">[log_errors]</span> = on
+php_admin_value<span class="hljs-section">[memory_limit]</span> = 256M
+php_admin_value<span class="hljs-section">[max_execution_time]</span> = 300
+php_admin_value<span class="hljs-section">[max_input_time]</span> = 300
+php_admin_value<span class="hljs-section">[post_max_size]</span> = 100M
+php_admin_value<span class="hljs-section">[upload_max_filesize]</span> = 100M
+</code></pre>
+<h3 id="2-تحسين-إعدادات-php-العامة">2. تحسين إعدادات PHP العامة</h3>
+<pre><code class="language-bash">sudo nano /etc/php/8.2/fpm/php.ini
+</code></pre>
+<pre><code class="language-ini"><span class="hljs-comment">; تحسينات الأداء</span>
+<span class="hljs-attr">memory_limit</span> = <span class="hljs-number">256</span>M
+<span class="hljs-attr">max_execution_time</span> = <span class="hljs-number">300</span>
+<span class="hljs-attr">max_input_time</span> = <span class="hljs-number">300</span>
+<span class="hljs-attr">max_input_vars</span> = <span class="hljs-number">3000</span>
+<span class="hljs-attr">post_max_size</span> = <span class="hljs-number">100</span>M
+<span class="hljs-attr">upload_max_filesize</span> = <span class="hljs-number">100</span>M
+
+<span class="hljs-comment">; إعدادات OPcache</span>
+<span class="hljs-attr">opcache.enable</span> = <span class="hljs-number">1</span>
+<span class="hljs-attr">opcache.enable_cli</span> = <span class="hljs-number">1</span>
+<span class="hljs-attr">opcache.memory_consumption</span> = <span class="hljs-number">128</span>
+<span class="hljs-attr">opcache.interned_strings_buffer</span> = <span class="hljs-number">8</span>
+<span class="hljs-attr">opcache.max_accelerated_files</span> = <span class="hljs-number">4000</span>
+<span class="hljs-attr">opcache.revalidate_freq</span> = <span class="hljs-number">2</span>
+<span class="hljs-attr">opcache.fast_shutdown</span> = <span class="hljs-number">1</span>
+<span class="hljs-attr">opcache.save_comments</span> = <span class="hljs-number">1</span>
+
+<span class="hljs-comment">; إعدادات الجلسات</span>
+<span class="hljs-attr">session.driver</span> = redis
+<span class="hljs-attr">session.lifetime</span> = <span class="hljs-number">120</span>
+<span class="hljs-attr">session.cookie_secure</span> = <span class="hljs-number">1</span>
+<span class="hljs-attr">session.cookie_httponly</span> = <span class="hljs-number">1</span>
+<span class="hljs-attr">session.cookie_samesite</span> = Strict
+
+<span class="hljs-comment">; إعدادات الأمان</span>
+<span class="hljs-attr">expose_php</span> = <span class="hljs-literal">Off</span>
+<span class="hljs-attr">allow_url_fopen</span> = <span class="hljs-literal">Off</span>
+<span class="hljs-attr">allow_url_include</span> = <span class="hljs-literal">Off</span>
+</code></pre>
+<pre><code class="language-bash">sudo systemctl restart php8.2-fpm
+</code></pre>
+<hr>
+<h2 id="-إعداد-redis">🔄 إعداد Redis</h2>
+<h3 id="1-تحسين-إعدادات-redis">1. تحسين إعدادات Redis</h3>
+<pre><code class="language-bash">sudo nano /etc/redis/redis.conf
+</code></pre>
+<pre><code class="language-conf"># تحسينات الأداء
+maxmemory 512mb
+maxmemory-policy allkeys-lru
+
+# إعدادات الحفظ
+save 900 1
+save 300 10
+save 60 10000
+
+# إعدادات الشبكة
+bind 127.0.0.1
+port 6379
+timeout 300
+
+# إعدادات الأمان
+requirepass كلمة_مرور_redis_قوية
+
+# تحسينات أخرى
+tcp-keepalive 300
+tcp-backlog 511
+databases 16
+</code></pre>
+<pre><code class="language-bash">sudo systemctl restart redis-server
+</code></pre>
+<hr>
+<h2 id="-إعداد-الأمان-والحماية">🔒 إعداد الأمان والحماية</h2>
+<h3 id="1-إعداد-firewall-ufw">1. إعداد Firewall (UFW)</h3>
+<pre><code class="language-bash"><span class="hljs-comment"># تفعيل UFW</span>
+sudo ufw <span class="hljs-built_in">enable</span>
+
+<span class="hljs-comment"># السماح بالمنافذ الأساسية</span>
+sudo ufw allow ssh
+sudo ufw allow 5000/tcp
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+
+<span class="hljs-comment"># منع الوصول المباشر للخدمات الداخلية</span>
+sudo ufw deny 3306
+sudo ufw deny 6379
+sudo ufw deny 9000
+
+<span class="hljs-comment"># عرض حالة Firewall</span>
+sudo ufw status
+</code></pre>
+<h3 id="2-إعداد-fail2ban">2. إعداد Fail2Ban</h3>
+<pre><code class="language-bash">sudo apt install -y fail2ban
+
+sudo nano /etc/fail2ban/jail.local
+</code></pre>
+<pre><code class="language-ini"><span class="hljs-section">[DEFAULT]</span>
+<span class="hljs-attr">bantime</span> = <span class="hljs-number">3600</span>
+<span class="hljs-attr">findtime</span> = <span class="hljs-number">600</span>
+<span class="hljs-attr">maxretry</span> = <span class="hljs-number">5</span>
+
+<span class="hljs-section">[nginx-http-auth]</span>
+<span class="hljs-attr">enabled</span> = <span class="hljs-literal">true</span>
+
+<span class="hljs-section">[nginx-limit-req]</span>
+<span class="hljs-attr">enabled</span> = <span class="hljs-literal">true</span>
+<span class="hljs-attr">filter</span> = nginx-limit-req
+<span class="hljs-attr">action</span> = iptables-multiport[name=ReqLimit, port=<span class="hljs-string">&quot;http,https&quot;</span>, protocol=tcp]
+<span class="hljs-attr">logpath</span> = /var/log/nginx/*error.log
+<span class="hljs-attr">findtime</span> = <span class="hljs-number">600</span>
+<span class="hljs-attr">bantime</span> = <span class="hljs-number">7200</span>
+<span class="hljs-attr">maxretry</span> = <span class="hljs-number">10</span>
+
+<span class="hljs-section">[php-fpm]</span>
+<span class="hljs-attr">enabled</span> = <span class="hljs-literal">true</span>
+<span class="hljs-attr">port</span> = http,https
+<span class="hljs-attr">filter</span> = php-fpm
+<span class="hljs-attr">logpath</span> = /var/log/php*fpm.log
+<span class="hljs-attr">maxretry</span> = <span class="hljs-number">5</span>
+</code></pre>
+<pre><code class="language-bash">sudo systemctl <span class="hljs-built_in">enable</span> fail2ban
+sudo systemctl start fail2ban
+</code></pre>
+<hr>
+<h2 id="-إعداد-المراقبة-والسجلات">📊 إعداد المراقبة والسجلات</h2>
+<h3 id="1-إعداد-logrotate">1. إعداد Logrotate</h3>
+<pre><code class="language-bash">sudo nano /etc/logrotate.d/rose-academy
+</code></pre>
+<pre><code>/var/log/nginx/*.log {
+    daily
+    missingok
+    rotate 14
+    compress
+    delaycompress
+    notifempty
+    create 644 nginx nginx
+    sharedscripts
+    postrotate
+        systemctl reload nginx
+    endscript
+}
+
+/home/runner/rose-academy/storage/logs/*.log {
+    daily
+    missingok
+    rotate 14
+    compress
+    delaycompress
+    notifempty
+    create 644 www-data www-data
+}
+</code></pre>
+<h3 id="2-إعداد-supervisor-للـ-queue-workers">2. إعداد Supervisor للـ Queue Workers</h3>
+<pre><code class="language-bash">sudo apt install -y supervisor
+
+sudo nano /etc/supervisor/conf.d/rose-academy-worker.conf
+</code></pre>
+<pre><code class="language-ini"><span class="hljs-section">[program:rose-academy-queue]</span>
+<span class="hljs-attr">process_name</span>=%(program_name)s_%(process_num)<span class="hljs-number">02</span>d
+<span class="hljs-attr">command</span>=php /home/runner/rose-academy/artisan queue:work redis --sleep=<span class="hljs-number">3</span> --tries=<span class="hljs-number">3</span> --max-time=<span class="hljs-number">3600</span> --timeout=<span class="hljs-number">300</span>
+<span class="hljs-attr">autostart</span>=<span class="hljs-literal">true</span>
+<span class="hljs-attr">autorestart</span>=<span class="hljs-literal">true</span>
+<span class="hljs-attr">stopasgroup</span>=<span class="hljs-literal">true</span>
+<span class="hljs-attr">killasgroup</span>=<span class="hljs-literal">true</span>
+<span class="hljs-attr">user</span>=www-data
+<span class="hljs-attr">numprocs</span>=<span class="hljs-number">4</span>
+<span class="hljs-attr">redirect_stderr</span>=<span class="hljs-literal">true</span>
+<span class="hljs-attr">stdout_logfile</span>=/var/log/supervisor/rose-academy-queue.log
+<span class="hljs-attr">stopwaitsecs</span>=<span class="hljs-number">3600</span>
+<span class="hljs-attr">startsecs</span>=<span class="hljs-number">10</span>
+</code></pre>
+<pre><code class="language-bash">sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl start rose-academy-queue:*
+</code></pre>
+<hr>
+<h2 id="-سكريبتات-الديبلومينت-الآلي">🚀 سكريبتات الديبلومينت الآلي</h2>
+<h3 id="1-سكريبت-الإعداد-الأولي">1. سكريبت الإعداد الأولي</h3>
+<pre><code class="language-bash"><span class="hljs-built_in">mkdir</span> -p /home/runner/rose-academy/scripts
+nano /home/runner/rose-academy/scripts/setup.sh
+</code></pre>
+<pre><code class="language-bash"><span class="hljs-meta">#!/bin/bash</span>
+<span class="hljs-built_in">set</span> -e
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;🚀 بدء الإعداد الأولي لـ Rose Academy...&quot;</span>
+
+<span class="hljs-comment"># ألوان للـ output</span>
+RED=<span class="hljs-string">&#x27;\033[0;31m&#x27;</span>
+GREEN=<span class="hljs-string">&#x27;\033[0;32m&#x27;</span>
+YELLOW=<span class="hljs-string">&#x27;\033[1;33m&#x27;</span>
+NC=<span class="hljs-string">&#x27;\033[0m&#x27;</span>
+
+<span class="hljs-function"><span class="hljs-title">log</span></span>() {
+    <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;<span class="hljs-variable">${GREEN}</span>[<span class="hljs-subst">$(date +&#x27;%Y-%m-%d %H:%M:%S&#x27;)</span>] $1<span class="hljs-variable">${NC}</span>&quot;</span>
+}
+
+<span class="hljs-function"><span class="hljs-title">error</span></span>() {
+    <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;<span class="hljs-variable">${RED}</span>[ERROR] $1<span class="hljs-variable">${NC}</span>&quot;</span>
+    <span class="hljs-built_in">exit</span> 1
+}
+
+<span class="hljs-function"><span class="hljs-title">warning</span></span>() {
+    <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;<span class="hljs-variable">${YELLOW}</span>[WARNING] $1<span class="hljs-variable">${NC}</span>&quot;</span>
+}
+
+<span class="hljs-comment"># التحقق من أن السكريبت يتم تشغيله بصلاحيات sudo</span>
+<span class="hljs-keyword">if</span> [ <span class="hljs-string">&quot;<span class="hljs-variable">$EUID</span>&quot;</span> -ne 0 ]; <span class="hljs-keyword">then</span>
+    error <span class="hljs-string">&quot;يرجى تشغيل السكريبت بصلاحيات sudo&quot;</span>
+<span class="hljs-keyword">fi</span>
+
+<span class="hljs-built_in">log</span> <span class="hljs-string">&quot;تحديث النظام...&quot;</span>
+apt update &amp;&amp; apt upgrade -y
+
+<span class="hljs-built_in">log</span> <span class="hljs-string">&quot;تثبيت المتطلبات الأساسية...&quot;</span>
+apt install -y nginx mysql-server redis-server supervisor fail2ban \
+    php8.2-fpm php8.2-mysql php8.2-redis php8.2-mbstring \
+    php8.2-xml php8.2-curl php8.2-zip php8.2-bcmath \
+    php8.2-intl php8.2-gd php8.2-json php8.2-tokenizer \
+    php8.2-fileinfo php8.2-dom php8.2-simplexml
+
+<span class="hljs-built_in">log</span> <span class="hljs-string">&quot;تثبيت Node.js...&quot;</span>
+curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+apt-get install -y nodejs
+
+<span class="hljs-built_in">log</span> <span class="hljs-string">&quot;تثبيت Composer...&quot;</span>
+<span class="hljs-keyword">if</span> [ ! -f /usr/local/bin/composer ]; <span class="hljs-keyword">then</span>
+    curl -sS https://getcomposer.org/installer | php
+    <span class="hljs-built_in">mv</span> composer.phar /usr/local/bin/composer
+    <span class="hljs-built_in">chmod</span> +x /usr/local/bin/composer
+<span class="hljs-keyword">fi</span>
+
+<span class="hljs-built_in">log</span> <span class="hljs-string">&quot;تفعيل الخدمات...&quot;</span>
+systemctl <span class="hljs-built_in">enable</span> nginx mysql redis-server php8.2-fpm supervisor fail2ban
+systemctl start nginx mysql redis-server php8.2-fpm supervisor fail2ban
+
+<span class="hljs-built_in">log</span> <span class="hljs-string">&quot;✅ تم إنجاز الإعداد الأولي بنجاح!&quot;</span>
+</code></pre>
+<h3 id="2-سكريبت-الديبلومينت-الرئيسي">2. سكريبت الديبلومينت الرئيسي</h3>
+<pre><code class="language-bash">nano /home/runner/rose-academy/scripts/deploy.sh
+</code></pre>
+<pre><code class="language-bash"><span class="hljs-meta">#!/bin/bash</span>
+<span class="hljs-built_in">set</span> -e
+
+<span class="hljs-comment"># متغيرات</span>
+PROJECT_DIR=<span class="hljs-string">&quot;/home/runner/rose-academy&quot;</span>
+API_DIR=<span class="hljs-string">&quot;<span class="hljs-variable">$PROJECT_DIR</span>&quot;</span>
+FRONTEND_DIR=<span class="hljs-string">&quot;<span class="hljs-variable">$PROJECT_DIR</span>/frontend&quot;</span>
+BACKUP_DIR=<span class="hljs-string">&quot;/home/runner/backups&quot;</span>
+DATE=$(<span class="hljs-built_in">date</span> +%Y%m%d_%H%M%S)
+
+<span class="hljs-comment"># ألوان</span>
+RED=<span class="hljs-string">&#x27;\033[0;31m&#x27;</span>
+GREEN=<span class="hljs-string">&#x27;\033[0;32m&#x27;</span>
+YELLOW=<span class="hljs-string">&#x27;\033[1;33m&#x27;</span>
+BLUE=<span class="hljs-string">&#x27;\033[0;34m&#x27;</span>
+NC=<span class="hljs-string">&#x27;\033[0m&#x27;</span>
+
+<span class="hljs-function"><span class="hljs-title">log</span></span>() {
+    <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;<span class="hljs-variable">${GREEN}</span>[<span class="hljs-subst">$(date +&#x27;%Y-%m-%d %H:%M:%S&#x27;)</span>] $1<span class="hljs-variable">${NC}</span>&quot;</span>
+}
+
+<span class="hljs-function"><span class="hljs-title">error</span></span>() {
+    <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;<span class="hljs-variable">${RED}</span>[ERROR] $1<span class="hljs-variable">${NC}</span>&quot;</span>
+    <span class="hljs-built_in">exit</span> 1
+}
+
+<span class="hljs-function"><span class="hljs-title">warning</span></span>() {
+    <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;<span class="hljs-variable">${YELLOW}</span>[WARNING] $1<span class="hljs-variable">${NC}</span>&quot;</span>
+}
+
+<span class="hljs-function"><span class="hljs-title">info</span></span>() {
+    <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;<span class="hljs-variable">${BLUE}</span>[INFO] $1<span class="hljs-variable">${NC}</span>&quot;</span>
+}
+
+<span class="hljs-comment"># دالة للنسخ الاحتياطي</span>
+<span class="hljs-function"><span class="hljs-title">backup</span></span>() {
+    <span class="hljs-built_in">log</span> <span class="hljs-string">&quot;إنشاء نسخة احتياطية...&quot;</span>
+    <span class="hljs-built_in">mkdir</span> -p <span class="hljs-variable">$BACKUP_DIR</span>
+    
+    <span class="hljs-comment"># نسخ احتياطي لقاعدة البيانات</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">command</span> -v mysqldump &amp;&gt; /dev/null; <span class="hljs-keyword">then</span>
+        mysqldump -u rose_admin -p rose_academy_prod &gt; <span class="hljs-string">&quot;<span class="hljs-variable">$BACKUP_DIR</span>/db_<span class="hljs-variable">$DATE</span>.sql&quot;</span> 2&gt;/dev/null || warning <span class="hljs-string">&quot;فشل في إنشاء نسخة احتياطية لقاعدة البيانات&quot;</span>
+    <span class="hljs-keyword">fi</span>
+    
+    <span class="hljs-comment"># نسخ احتياطي للملفات</span>
+    tar -czf <span class="hljs-string">&quot;<span class="hljs-variable">$BACKUP_DIR</span>/files_<span class="hljs-variable">$DATE</span>.tar.gz&quot;</span> -C / home/runner/rose-academy --exclude=<span class="hljs-string">&#x27;node_modules&#x27;</span> --exclude=<span class="hljs-string">&#x27;vendor&#x27;</span> 2&gt;/dev/null || warning <span class="hljs-string">&quot;فشل في إنشاء نسخة احتياطية للملفات&quot;</span>
+    
+    <span class="hljs-comment"># حذف النسخ القديمة (أكثر من 7 أيام)</span>
+    find <span class="hljs-variable">$BACKUP_DIR</span> -name <span class="hljs-string">&quot;*.sql&quot;</span> -mtime +7 -delete 2&gt;/dev/null || <span class="hljs-literal">true</span>
+    find <span class="hljs-variable">$BACKUP_DIR</span> -name <span class="hljs-string">&quot;*.tar.gz&quot;</span> -mtime +7 -delete 2&gt;/dev/null || <span class="hljs-literal">true</span>
+}
+
+<span class="hljs-comment"># دالة لتحديث Laravel API</span>
+<span class="hljs-function"><span class="hljs-title">deploy_api</span></span>() {
+    <span class="hljs-built_in">log</span> <span class="hljs-string">&quot;📱 تحديث Laravel API...&quot;</span>
+    <span class="hljs-built_in">cd</span> <span class="hljs-variable">$API_DIR</span>
+    
+    <span class="hljs-comment"># تحديث التبعيات</span>
+    composer install --optimize-autoloader --no-dev --no-interaction
+    
+    <span class="hljs-comment"># وضع الموقع في وضع الصيانة</span>
+    php artisan down --render=<span class="hljs-string">&quot;errors::503&quot;</span> --secret=<span class="hljs-string">&quot;rose-academy-maintenance&quot;</span> || <span class="hljs-literal">true</span>
+    
+    <span class="hljs-comment"># تنظيف الكاش</span>
+    php artisan config:clear
+    php artisan route:clear
+    php artisan view:clear
+    php artisan cache:clear
+    
+    <span class="hljs-comment"># إنشاء كاش للإنتاج</span>
+    php artisan config:cache
+    php artisan route:cache
+    php artisan view:cache
+    
+    <span class="hljs-comment"># تشغيل المايجريشن</span>
+    php artisan migrate --force
+    
+    <span class="hljs-comment"># إعادة تشغيل queue workers</span>
+    php artisan queue:restart
+    
+    <span class="hljs-comment"># إعداد الصلاحيات</span>
+    <span class="hljs-built_in">chown</span> -R www-data:www-data storage bootstrap/cache
+    <span class="hljs-built_in">chmod</span> -R 775 storage bootstrap/cache
+    
+    <span class="hljs-comment"># إخراج الموقع من وضع الصيانة</span>
+    php artisan up
+    
+    <span class="hljs-built_in">log</span> <span class="hljs-string">&quot;✅ تم تحديث Laravel API بنجاح&quot;</span>
+}
+
+<span class="hljs-comment"># دالة لبناء React Frontend</span>
+<span class="hljs-function"><span class="hljs-title">deploy_frontend</span></span>() {
+    <span class="hljs-built_in">log</span> <span class="hljs-string">&quot;⚛️ بناء React Frontend...&quot;</span>
+    <span class="hljs-built_in">cd</span> <span class="hljs-variable">$FRONTEND_DIR</span>
+    
+    <span class="hljs-comment"># تثبيت التبعيات</span>
+    npm ci --silent
+    
+    <span class="hljs-comment"># بناء المشروع للإنتاج</span>
+    npm run build:prod
+    
+    <span class="hljs-comment"># إعداد الصلاحيات</span>
+    <span class="hljs-built_in">chown</span> -R www-data:www-data build/
+    <span class="hljs-built_in">chmod</span> -R 755 build/
+    
+    <span class="hljs-built_in">log</span> <span class="hljs-string">&quot;✅ تم بناء React Frontend بنجاح&quot;</span>
+}
+
+<span class="hljs-comment"># دالة لإعادة تشغيل الخدمات</span>
+<span class="hljs-function"><span class="hljs-title">restart_services</span></span>() {
+    <span class="hljs-built_in">log</span> <span class="hljs-string">&quot;🔄 إعادة تشغيل الخدمات...&quot;</span>
+    
+    <span class="hljs-comment"># اختبار إعدادات Nginx</span>
+    nginx -t || error <span class="hljs-string">&quot;خطأ في إعدادات Nginx&quot;</span>
+    
+    <span class="hljs-comment"># إعادة تشغيل الخدمات</span>
+    systemctl restart php8.2-fpm
+    systemctl reload nginx
+    systemctl restart redis-server
+    
+    <span class="hljs-comment"># إعادة تشغيل supervisor workers</span>
+    supervisorctl restart rose-academy-queue:* 2&gt;/dev/null || warning <span class="hljs-string">&quot;فشل في إعادة تشغيل queue workers&quot;</span>
+    
+    <span class="hljs-built_in">log</span> <span class="hljs-string">&quot;✅ تم إعادة تشغيل الخدمات بنجاح&quot;</span>
+}
+
+<span class="hljs-comment"># دالة للفحص الصحي</span>
+<span class="hljs-function"><span class="hljs-title">health_check</span></span>() {
+    <span class="hljs-built_in">log</span> <span class="hljs-string">&quot;🏥 فحص صحة النظام...&quot;</span>
+    
+    <span class="hljs-comment"># فحص الخدمات</span>
+    services=(<span class="hljs-string">&quot;nginx&quot;</span> <span class="hljs-string">&quot;php8.2-fpm&quot;</span> <span class="hljs-string">&quot;mysql&quot;</span> <span class="hljs-string">&quot;redis-server&quot;</span>)
+    <span class="hljs-keyword">for</span> service <span class="hljs-keyword">in</span> <span class="hljs-string">&quot;<span class="hljs-variable">${services[@]}</span>&quot;</span>; <span class="hljs-keyword">do</span>
+        <span class="hljs-keyword">if</span> systemctl is-active --quiet <span class="hljs-variable">$service</span>; <span class="hljs-keyword">then</span>
+            info <span class="hljs-string">&quot;✅ <span class="hljs-variable">$service</span>: نشط&quot;</span>
+        <span class="hljs-keyword">else</span>
+            error <span class="hljs-string">&quot;❌ <span class="hljs-variable">$service</span>: غير نشط&quot;</span>
+        <span class="hljs-keyword">fi</span>
+    <span class="hljs-keyword">done</span>
+    
+    <span class="hljs-comment"># فحص الاتصال بقاعدة البيانات</span>
+    <span class="hljs-built_in">cd</span> <span class="hljs-variable">$API_DIR</span>
+    <span class="hljs-keyword">if</span> php artisan migrate:status &gt;/dev/null 2&gt;&amp;1; <span class="hljs-keyword">then</span>
+        info <span class="hljs-string">&quot;✅ قاعدة البيانات: متصلة&quot;</span>
+    <span class="hljs-keyword">else</span>
+        error <span class="hljs-string">&quot;❌ قاعدة البيانات: غير متصلة&quot;</span>
+    <span class="hljs-keyword">fi</span>
+    
+    <span class="hljs-comment"># فحص الذاكرة والقرص</span>
+    memory_usage=$(free | grep Mem | awk <span class="hljs-string">&#x27;{printf &quot;%.1f&quot;, $3/$2 * 100.0}&#x27;</span>)
+    disk_usage=$(<span class="hljs-built_in">df</span> -h / | awk <span class="hljs-string">&#x27;NR==2{print $5}&#x27;</span> | sed <span class="hljs-string">&#x27;s/%//&#x27;</span>)
+    
+    info <span class="hljs-string">&quot;📊 استخدام الذاكرة: <span class="hljs-variable">${memory_usage}</span>%&quot;</span>
+    info <span class="hljs-string">&quot;💾 استخدام القرص: <span class="hljs-variable">${disk_usage}</span>%&quot;</span>
+    
+    <span class="hljs-keyword">if</span> (( $(<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$memory_usage</span> &gt; 90&quot;</span> | bc -l) )); <span class="hljs-keyword">then</span>
+        warning <span class="hljs-string">&quot;استخدام الذاكرة مرتفع: <span class="hljs-variable">${memory_usage}</span>%&quot;</span>
+    <span class="hljs-keyword">fi</span>
+    
+    <span class="hljs-keyword">if</span> (( disk_usage &gt; 90 )); <span class="hljs-keyword">then</span>
+        warning <span class="hljs-string">&quot;استخدام القرص مرتفع: <span class="hljs-variable">${disk_usage}</span>%&quot;</span>
+    <span class="hljs-keyword">fi</span>
+}
+
+<span class="hljs-comment"># تشغيل الديبلومينت</span>
+<span class="hljs-function"><span class="hljs-title">main</span></span>() {
+    <span class="hljs-built_in">log</span> <span class="hljs-string">&quot;🚀 بدء عملية الديبلومينت...&quot;</span>
+    
+    <span class="hljs-comment"># التحقق من المجلدات</span>
+    <span class="hljs-keyword">if</span> [ ! -d <span class="hljs-string">&quot;<span class="hljs-variable">$API_DIR</span>&quot;</span> ]; <span class="hljs-keyword">then</span>
+        error <span class="hljs-string">&quot;مجلد API غير موجود: <span class="hljs-variable">$API_DIR</span>&quot;</span>
+    <span class="hljs-keyword">fi</span>
+    
+    <span class="hljs-comment"># إنشاء نسخة احتياطية</span>
+    backup
+    
+    <span class="hljs-comment"># تحديث API</span>
+    deploy_api
+    
+    <span class="hljs-comment"># بناء Frontend (إذا كان موجود)</span>
+    <span class="hljs-keyword">if</span> [ -d <span class="hljs-string">&quot;<span class="hljs-variable">$FRONTEND_DIR</span>&quot;</span> ]; <span class="hljs-keyword">then</span>
+        deploy_frontend
+    <span class="hljs-keyword">else</span>
+        warning <span class="hljs-string">&quot;مجلد Frontend غير موجود، سيتم تخطي هذه الخطوة&quot;</span>
+    <span class="hljs-keyword">fi</span>
+    
+    <span class="hljs-comment"># إعادة تشغيل الخدمات</span>
+    restart_services
+    
+    <span class="hljs-comment"># فحص صحة النظام</span>
+    health_check
+    
+    <span class="hljs-built_in">log</span> <span class="hljs-string">&quot;🎉 تم إنجاز الديبلومينت بنجاح!&quot;</span>
+    info <span class="hljs-string">&quot;🌍 الموقع متاح على: https://www.rose-academy.com&quot;</span>
+    info <span class="hljs-string">&quot;🔗 API متاح على: https://api.rose-academy.com/api&quot;</span>
+    info <span class="hljs-string">&quot;📝 سجل النسخ الاحتياطية: <span class="hljs-variable">$BACKUP_DIR</span>&quot;</span>
+}
+
+<span class="hljs-comment"># تشغيل السكريبت الرئيسي</span>
+main <span class="hljs-string">&quot;<span class="hljs-variable">$@</span>&quot;</span>
+</code></pre>
+<h3 id="3-سكريبت-فحص-الحالة">3. سكريبت فحص الحالة</h3>
+<pre><code class="language-bash">nano /home/runner/rose-academy/scripts/health-check.sh
+</code></pre>
+<pre><code class="language-bash"><span class="hljs-meta">#!/bin/bash</span>
+
+<span class="hljs-comment"># ألوان</span>
+RED=<span class="hljs-string">&#x27;\033[0;31m&#x27;</span>
+GREEN=<span class="hljs-string">&#x27;\033[0;32m&#x27;</span>
+YELLOW=<span class="hljs-string">&#x27;\033[1;33m&#x27;</span>
+BLUE=<span class="hljs-string">&#x27;\033[0;34m&#x27;</span>
+NC=<span class="hljs-string">&#x27;\033[0m&#x27;</span>
+
+<span class="hljs-function"><span class="hljs-title">log</span></span>() {
+    <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;<span class="hljs-variable">${GREEN}</span>[<span class="hljs-subst">$(date +&#x27;%Y-%m-%d %H:%M:%S&#x27;)</span>] $1<span class="hljs-variable">${NC}</span>&quot;</span>
+}
+
+<span class="hljs-function"><span class="hljs-title">error</span></span>() {
+    <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;<span class="hljs-variable">${RED}</span>[ERROR] $1<span class="hljs-variable">${NC}</span>&quot;</span>
+}
+
+<span class="hljs-function"><span class="hljs-title">warning</span></span>() {
+    <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;<span class="hljs-variable">${YELLOW}</span>[WARNING] $1<span class="hljs-variable">${NC}</span>&quot;</span>
+}
+
+<span class="hljs-function"><span class="hljs-title">info</span></span>() {
+    <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;<span class="hljs-variable">${BLUE}</span>[INFO] $1<span class="hljs-variable">${NC}</span>&quot;</span>
+}
+
+<span class="hljs-built_in">log</span> <span class="hljs-string">&quot;🔍 فحص حالة نظام Rose Academy...&quot;</span>
+
+<span class="hljs-comment"># فحص الموارد</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&quot;</span>
+info <span class="hljs-string">&quot;📊 معلومات النظام:&quot;</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;CPU Load: <span class="hljs-subst">$(uptime | awk -F&#x27;load average:&#x27; &#x27;{ print $2 }&#x27;)</span>&quot;</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Memory Usage: <span class="hljs-subst">$(free -h | awk &#x27;/^Mem:/ {printf <span class="hljs-string">&quot;%s/%s (%.1f%%)&quot;</span>, $3, $2, $3/$2*100}&#x27;)</span>&quot;</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Disk Usage: <span class="hljs-subst">$(df -h / | awk &#x27;NR==2{printf <span class="hljs-string">&quot;%s/%s (%s)&quot;</span>, $3, $2, $5}&#x27;)</span>&quot;</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Uptime: <span class="hljs-subst">$(uptime -p)</span>&quot;</span>
+
+<span class="hljs-comment"># فحص الخدمات</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&quot;</span>
+info <span class="hljs-string">&quot;🔧 حالة الخدمات:&quot;</span>
+services=(<span class="hljs-string">&quot;nginx&quot;</span> <span class="hljs-string">&quot;php8.2-fpm&quot;</span> <span class="hljs-string">&quot;mysql&quot;</span> <span class="hljs-string">&quot;redis-server&quot;</span> <span class="hljs-string">&quot;supervisor&quot;</span>)
+<span class="hljs-keyword">for</span> service <span class="hljs-keyword">in</span> <span class="hljs-string">&quot;<span class="hljs-variable">${services[@]}</span>&quot;</span>; <span class="hljs-keyword">do</span>
+    <span class="hljs-keyword">if</span> systemctl is-active --quiet <span class="hljs-variable">$service</span>; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;✅ <span class="hljs-variable">$service</span>: <span class="hljs-variable">${GREEN}</span>نشط<span class="hljs-variable">${NC}</span>&quot;</span>
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;❌ <span class="hljs-variable">$service</span>: <span class="hljs-variable">${RED}</span>متوقف<span class="hljs-variable">${NC}</span>&quot;</span>
+    <span class="hljs-keyword">fi</span>
+<span class="hljs-keyword">done</span>
+
+<span class="hljs-comment"># فحص المنافذ</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&quot;</span>
+info <span class="hljs-string">&quot;🌐 حالة المنافذ:&quot;</span>
+ports=(<span class="hljs-string">&quot;5000:Nginx&quot;</span> <span class="hljs-string">&quot;3306:MySQL&quot;</span> <span class="hljs-string">&quot;6379:Redis&quot;</span> <span class="hljs-string">&quot;9000:PHP-FPM&quot;</span>)
+<span class="hljs-keyword">for</span> port_service <span class="hljs-keyword">in</span> <span class="hljs-string">&quot;<span class="hljs-variable">${ports[@]}</span>&quot;</span>; <span class="hljs-keyword">do</span>
+    port=$(<span class="hljs-built_in">echo</span> <span class="hljs-variable">$port_service</span> | <span class="hljs-built_in">cut</span> -d: -f1)
+    service=$(<span class="hljs-built_in">echo</span> <span class="hljs-variable">$port_service</span> | <span class="hljs-built_in">cut</span> -d: -f2)
+    <span class="hljs-keyword">if</span> netstat -tuln | grep -q <span class="hljs-string">&quot;:<span class="hljs-variable">$port</span> &quot;</span>; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;✅ <span class="hljs-variable">$service</span> (Port <span class="hljs-variable">$port</span>): <span class="hljs-variable">${GREEN}</span>مفتوح<span class="hljs-variable">${NC}</span>&quot;</span>
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;❌ <span class="hljs-variable">$service</span> (Port <span class="hljs-variable">$port</span>): <span class="hljs-variable">${RED}</span>مغلق<span class="hljs-variable">${NC}</span>&quot;</span>
+    <span class="hljs-keyword">fi</span>
+<span class="hljs-keyword">done</span>
+
+<span class="hljs-comment"># فحص قاعدة البيانات</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&quot;</span>
+info <span class="hljs-string">&quot;🗄️ حالة قاعدة البيانات:&quot;</span>
+<span class="hljs-built_in">cd</span> /home/runner/rose-academy
+<span class="hljs-keyword">if</span> php artisan migrate:status &gt;/dev/null 2&gt;&amp;1; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;✅ قاعدة البيانات: <span class="hljs-variable">${GREEN}</span>متصلة<span class="hljs-variable">${NC}</span>&quot;</span>
+    
+    <span class="hljs-comment"># عرض عدد الجداول</span>
+    table_count=$(php artisan db:show --counts 2&gt;/dev/null | grep -c <span class="hljs-string">&quot;│&quot;</span> | awk <span class="hljs-string">&#x27;{print $1-2}&#x27;</span> 2&gt;/dev/null || <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;N/A&quot;</span>)
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;📊 عدد الجداول: <span class="hljs-variable">$table_count</span>&quot;</span>
+<span class="hljs-keyword">else</span>
+    <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;❌ قاعدة البيانات: <span class="hljs-variable">${RED}</span>غير متصلة<span class="hljs-variable">${NC}</span>&quot;</span>
+<span class="hljs-keyword">fi</span>
+
+<span class="hljs-comment"># فحص Redis</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&quot;</span>
+info <span class="hljs-string">&quot;🔴 حالة Redis:&quot;</span>
+<span class="hljs-keyword">if</span> redis-cli ping &gt;/dev/null 2&gt;&amp;1; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;✅ Redis: <span class="hljs-variable">${GREEN}</span>متصل<span class="hljs-variable">${NC}</span>&quot;</span>
+    memory_usage=$(redis-cli info memory | grep used_memory_human | <span class="hljs-built_in">cut</span> -d: -f2 | <span class="hljs-built_in">tr</span> -d <span class="hljs-string">&#x27;\r&#x27;</span>)
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;💾 استخدام الذاكرة: <span class="hljs-variable">$memory_usage</span>&quot;</span>
+<span class="hljs-keyword">else</span>
+    <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;❌ Redis: <span class="hljs-variable">${RED}</span>غير متصل<span class="hljs-variable">${NC}</span>&quot;</span>
+<span class="hljs-keyword">fi</span>
+
+<span class="hljs-comment"># فحص Supervisor Workers</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&quot;</span>
+info <span class="hljs-string">&quot;👷 حالة Queue Workers:&quot;</span>
+<span class="hljs-keyword">if</span> <span class="hljs-built_in">command</span> -v supervisorctl &amp;&gt; /dev/null; <span class="hljs-keyword">then</span>
+    supervisorctl status rose-academy-queue:* 2&gt;/dev/null || <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;لا توجد queue workers مُعرّفة&quot;</span>
+<span class="hljs-keyword">else</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Supervisor غير مثبت&quot;</span>
+<span class="hljs-keyword">fi</span>
+
+<span class="hljs-comment"># فحص السجلات الأخيرة</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&quot;</span>
+info <span class="hljs-string">&quot;📋 آخر الأخطاء:&quot;</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Nginx Errors (آخر 5):&quot;</span>
+<span class="hljs-built_in">tail</span> -n 5 /var/log/nginx/error.log 2&gt;/dev/null || <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;لا توجد أخطاء&quot;</span>
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&quot;</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Laravel Errors (آخر 5):&quot;</span>
+<span class="hljs-built_in">tail</span> -n 5 /home/runner/rose-academy/storage/logs/laravel.log 2&gt;/dev/null || <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;لا توجد أخطاء&quot;</span>
+
+<span class="hljs-comment"># فحص مساحة القرص المتبقية</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&quot;</span>
+info <span class="hljs-string">&quot;💾 تحليل مساحة القرص:&quot;</span>
+<span class="hljs-built_in">df</span> -h | grep -vE <span class="hljs-string">&#x27;^Filesystem|tmpfs|cdrom&#x27;</span>
+
+<span class="hljs-comment"># فحص العمليات التي تستهلك موارد كثيرة</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&quot;</span>
+info <span class="hljs-string">&quot;🔥 العمليات التي تستهلك CPU أكثر:&quot;</span>
+ps aux --<span class="hljs-built_in">sort</span>=-%cpu | <span class="hljs-built_in">head</span> -6
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&quot;</span>
+info <span class="hljs-string">&quot;🔥 العمليات التي تستهلك ذاكرة أكثر:&quot;</span>
+ps aux --<span class="hljs-built_in">sort</span>=-%mem | <span class="hljs-built_in">head</span> -6
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&quot;</span>
+<span class="hljs-built_in">log</span> <span class="hljs-string">&quot;✅ انتهى فحص الحالة&quot;</span>
+</code></pre>
+<h3 id="4-جعل-السكريبتات-قابلة-للتنفيذ">4. جعل السكريبتات قابلة للتنفيذ</h3>
+<pre><code class="language-bash"><span class="hljs-built_in">chmod</span> +x /home/runner/rose-academy/scripts/*.sh
+</code></pre>
+<hr>
+<h2 id="-النسخ-الاحتياطية-التلقائية">🔄 النسخ الاحتياطية التلقائية</h2>
+<h3 id="1-سكريبت-النسخ-الاحتياطي">1. سكريبت النسخ الاحتياطي</h3>
+<pre><code class="language-bash">nano /home/runner/rose-academy/scripts/backup.sh
+</code></pre>
+<pre><code class="language-bash"><span class="hljs-meta">#!/bin/bash</span>
+
+BACKUP_DIR=<span class="hljs-string">&quot;/home/runner/backups&quot;</span>
+DATE=$(<span class="hljs-built_in">date</span> +%Y%m%d_%H%M%S)
+KEEP_DAYS=7
+
+<span class="hljs-comment"># إنشاء مجلد النسخ الاحتياطية</span>
+<span class="hljs-built_in">mkdir</span> -p <span class="hljs-variable">$BACKUP_DIR</span>
+
+<span class="hljs-comment"># نسخ احتياطي لقاعدة البيانات</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;إنشاء نسخة احتياطية لقاعدة البيانات...&quot;</span>
+mysqldump -u rose_admin -p<span class="hljs-string">&#x27;كلمة_المرور&#x27;</span> rose_academy_prod | gzip &gt; <span class="hljs-string">&quot;<span class="hljs-variable">$BACKUP_DIR</span>/db_<span class="hljs-variable">$DATE</span>.sql.gz&quot;</span>
+
+<span class="hljs-comment"># نسخ احتياطي للملفات المهمة</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;إنشاء نسخة احتياطية للملفات...&quot;</span>
+tar -czf <span class="hljs-string">&quot;<span class="hljs-variable">$BACKUP_DIR</span>/files_<span class="hljs-variable">$DATE</span>.tar.gz&quot;</span> \
+    --exclude=<span class="hljs-string">&#x27;node_modules&#x27;</span> \
+    --exclude=<span class="hljs-string">&#x27;vendor&#x27;</span> \
+    --exclude=<span class="hljs-string">&#x27;.git&#x27;</span> \
+    --exclude=<span class="hljs-string">&#x27;storage/logs&#x27;</span> \
+    --exclude=<span class="hljs-string">&#x27;storage/framework/cache&#x27;</span> \
+    --exclude=<span class="hljs-string">&#x27;storage/framework/sessions&#x27;</span> \
+    --exclude=<span class="hljs-string">&#x27;storage/framework/views&#x27;</span> \
+    /home/runner/rose-academy/
+
+<span class="hljs-comment"># نسخ احتياطي لإعدادات النظام</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;إنشاء نسخة احتياطية لإعدادات النظام...&quot;</span>
+tar -czf <span class="hljs-string">&quot;<span class="hljs-variable">$BACKUP_DIR</span>/system_config_<span class="hljs-variable">$DATE</span>.tar.gz&quot;</span> \
+    /etc/nginx/sites-available/rose-academy \
+    /etc/php/8.2/fpm/pool.d/www.conf \
+    /etc/redis/redis.conf \
+    /etc/mysql/mysql.conf.d/mysqld.cnf \
+    /etc/supervisor/conf.d/rose-academy-worker.conf \
+    2&gt;/dev/null
+
+<span class="hljs-comment"># حذف النسخ القديمة</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;حذف النسخ الاحتياطية القديمة...&quot;</span>
+find <span class="hljs-variable">$BACKUP_DIR</span> -name <span class="hljs-string">&quot;*.sql.gz&quot;</span> -mtime +<span class="hljs-variable">$KEEP_DAYS</span> -delete
+find <span class="hljs-variable">$BACKUP_DIR</span> -name <span class="hljs-string">&quot;*.tar.gz&quot;</span> -mtime +<span class="hljs-variable">$KEEP_DAYS</span> -delete
+
+<span class="hljs-comment"># عرض حجم النسخ الاحتياطية</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;حجم النسخ الاحتياطية:&quot;</span>
+<span class="hljs-built_in">du</span> -sh <span class="hljs-variable">$BACKUP_DIR</span>/*
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;✅ تم إنجاز النسخ الاحتياطي: <span class="hljs-variable">$DATE</span>&quot;</span>
+</code></pre>
+<h3 id="2-إعداد-cron-للنسخ-الاحتياطية-التلقائية">2. إعداد Cron للنسخ الاحتياطية التلقائية</h3>
+<pre><code class="language-bash">crontab -e
+</code></pre>
+<p>إضافة الأسطر التالية:</p>
+<pre><code class="language-bash"><span class="hljs-comment"># نسخ احتياطي يومي في الساعة 2:00 صباحاً</span>
+0 2 * * * /home/runner/rose-academy/scripts/backup.sh &gt;&gt; /var/log/backup.log 2&gt;&amp;1
+
+<span class="hljs-comment"># فحص صحة النظام كل ساعة</span>
+0 * * * * /home/runner/rose-academy/scripts/health-check.sh &gt;&gt; /var/log/health-check.log 2&gt;&amp;1
+
+<span class="hljs-comment"># تنظيف السجلات الأسبوعي</span>
+0 3 * * 0 find /home/runner/rose-academy/storage/logs -name <span class="hljs-string">&quot;*.log&quot;</span> -mtime +7 -delete
+</code></pre>
+<hr>
+<h2 id="-تشغيل-الديبلومينت-النهائي">🚀 تشغيل الديبلومينت النهائي</h2>
+<h3 id="1-تنفيذ-الإعداد-الأولي-مرة-واحدة-فقط">1. تنفيذ الإعداد الأولي (مرة واحدة فقط)</h3>
+<pre><code class="language-bash">sudo /home/runner/rose-academy/scripts/setup.sh
+</code></pre>
+<h3 id="2-تشغيل-الديبلومينت-الكامل">2. تشغيل الديبلومينت الكامل</h3>
+<pre><code class="language-bash"><span class="hljs-built_in">cd</span> /home/runner/rose-academy
+sudo ./scripts/deploy.sh
+</code></pre>
+<h3 id="3-فحص-حالة-النظام">3. فحص حالة النظام</h3>
+<pre><code class="language-bash">./scripts/health-check.sh
+</code></pre>
+<h3 id="4-إنشاء-نسخة-احتياطية-يدوية">4. إنشاء نسخة احتياطية يدوية</h3>
+<pre><code class="language-bash">./scripts/backup.sh
+</code></pre>
+<hr>
+<h2 id="-استكشاف-الأخطاء-وحلها">🔧 استكشاف الأخطاء وحلها</h2>
+<h3 id="1-مشاكل-شائعة">1. مشاكل شائعة</h3>
+<p><strong>مشكلة: خطأ 502 Bad Gateway</strong></p>
+<pre><code class="language-bash"><span class="hljs-comment"># فحص حالة PHP-FPM</span>
+sudo systemctl status php8.2-fpm
+
+<span class="hljs-comment"># فحص سجلات الأخطاء</span>
+sudo <span class="hljs-built_in">tail</span> -f /var/log/nginx/error.log
+sudo <span class="hljs-built_in">tail</span> -f /var/log/php8.2-fpm.log
+
+<span class="hljs-comment"># إعادة تشغيل PHP-FPM</span>
+sudo systemctl restart php8.2-fpm
+</code></pre>
+<p><strong>مشكلة: خطأ في الاتصال بقاعدة البيانات</strong></p>
+<pre><code class="language-bash"><span class="hljs-comment"># فحص حالة MySQL</span>
+sudo systemctl status mysql
+
+<span class="hljs-comment"># اختبار الاتصال</span>
+mysql -u rose_admin -p rose_academy_prod
+
+<span class="hljs-comment"># فحص إعدادات Laravel</span>
+<span class="hljs-built_in">cd</span> /home/runner/rose-academy
+php artisan config:show database
+</code></pre>
+<p><strong>مشكلة: مشاكل CORS</strong></p>
+<pre><code class="language-bash"><span class="hljs-comment"># فحص إعدادات CORS في Laravel</span>
+<span class="hljs-built_in">cd</span> /home/runner/rose-academy
+php artisan config:show cors
+
+<span class="hljs-comment"># إعادة بناء الكاش</span>
+php artisan config:cache
+</code></pre>
+<p><strong>مشكلة: بطء في الأداء</strong></p>
+<pre><code class="language-bash"><span class="hljs-comment"># فحص استخدام الموارد</span>
+htop
+
+<span class="hljs-comment"># فحص حالة Redis</span>
+redis-cli info stats
+
+<span class="hljs-comment"># تنظيف الكاش</span>
+<span class="hljs-built_in">cd</span> /home/runner/rose-academy
+php artisan cache:clear
+php artisan view:clear
+php artisan config:cache
+</code></pre>
+<h3 id="2-أوامر-الطوارئ">2. أوامر الطوارئ</h3>
+<p><strong>إيقاف جميع الخدمات:</strong></p>
+<pre><code class="language-bash">sudo systemctl stop nginx php8.2-fpm mysql redis-server
+</code></pre>
+<p><strong>إعادة تشغيل جميع الخدمات:</strong></p>
+<pre><code class="language-bash">sudo systemctl restart nginx php8.2-fpm mysql redis-server supervisor
+</code></pre>
+<p><strong>استعادة من النسخة الاحتياطية:</strong></p>
+<pre><code class="language-bash"><span class="hljs-comment"># استعادة قاعدة البيانات</span>
+gunzip &lt; /home/runner/backups/db_YYYYMMDD_HHMMSS.sql.gz | mysql -u rose_admin -p rose_academy_prod
+
+<span class="hljs-comment"># استعادة الملفات</span>
+<span class="hljs-built_in">cd</span> /
+sudo tar -xzf /home/runner/backups/files_YYYYMMDD_HHMMSS.tar.gz
+</code></pre>
+<hr>
+<h2 id="-مراقبة-الأداء-والتحسين">📈 مراقبة الأداء والتحسين</h2>
+<h3 id="1-مراقبة-الموارد">1. مراقبة الموارد</h3>
+<pre><code class="language-bash"><span class="hljs-comment"># مراقبة استخدام CPU والذاكرة</span>
+top -p $(pgrep -d<span class="hljs-string">&#x27;,&#x27;</span> nginx,php-fpm,mysqld,redis-server)
+
+<span class="hljs-comment"># مراقبة استخدام القرص</span>
+iotop
+
+<span class="hljs-comment"># مراقبة حركة الشبكة</span>
+nethogs
+</code></pre>
+<h3 id="2-تحسينات-إضافية">2. تحسينات إضافية</h3>
+<p><strong>تحسين MySQL:</strong></p>
+<pre><code class="language-sql"><span class="hljs-comment">-- تحليل الاستعلامات البطيئة</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> mysql.slow_log <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> start_time <span class="hljs-keyword">DESC</span> LIMIT <span class="hljs-number">10</span>;
+
+<span class="hljs-comment">-- تحسين الجداول</span>
+OPTIMIZE <span class="hljs-keyword">TABLE</span> users, courses, lessons, subscriptions;
+</code></pre>
+<p><strong>تحسين Redis:</strong></p>
+<pre><code class="language-bash"><span class="hljs-comment"># فحص إحصائيات Redis</span>
+redis-cli info stats
+
+<span class="hljs-comment"># تنظيف الكاش المنتهي الصلاحية</span>
+redis-cli FLUSHDB
+</code></pre>
+<hr>
+<h2 id="-قائمة-التحقق-النهائية">📋 قائمة التحقق النهائية</h2>
+<h3 id="قبل-النشر">قبل النشر</h3>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> تحديث ملف <code>.env</code> للإنتاج</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> تشغيل تستات Laravel</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> بناء React frontend</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> إعداد قاعدة البيانات</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> تكوين Nginx مع Subdomains</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> إعداد SSL certificates</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> تكوين Firewall</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> إعداد النسخ الاحتياطية</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> تشغيل فحص الأمان</li>
+</ul>
+<h3 id="بعد-النشر">بعد النشر</h3>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> فحص جميع الروابط</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> اختبار API endpoints</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> فحص أداء الموقع</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> مراجعة السجلات</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> اختبار النسخ الاحتياطية</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> فحص مراقبة النظام</li>
+</ul>
+<hr>
+<h2 id="-النتيجة-النهائية">🎯 النتيجة النهائية</h2>
+<p>بعد اتباع جميع الخطوات في هذا الدليل، ستحصل على:</p>
+<p>✅ <strong>Frontend متاح على</strong>: <a href="https://www.rose-academy.com">https://www.rose-academy.com</a><br>
+✅ <strong>API متاح على</strong>: <a href="https://api.rose-academy.com/api">https://api.rose-academy.com/api</a><br>
+✅ <strong>نظام آمن ومحمي</strong> مع Firewall وFail2Ban<br>
+✅ <strong>أداء عالي</strong> مع تحسينات PHP-FPM وRedis<br>
+✅ <strong>نسخ احتياطية تلقائية</strong> يومية<br>
+✅ <strong>مراقبة شاملة</strong> للنظام والأداء<br>
+✅ <strong>سكريبتات آلية</strong> للديبلومينت والصيانة</p>
+<hr>
+<h2 id="-الدعم-والصيانة">📞 الدعم والصيانة</h2>
+<h3 id="الصيانة-الدورية">الصيانة الدورية</h3>
+<p><strong>يومياً:</strong></p>
+<ul>
+<li>فحص سجلات الأخطاء</li>
+<li>مراقبة استخدام الموارد</li>
+<li>التحقق من النسخ الاحتياطية</li>
+</ul>
+<p><strong>أسبوعياً:</strong></p>
+<ul>
+<li>تحديث النظام والحزم</li>
+<li>تنظيف السجلات القديمة</li>
+<li>فحص الأمان</li>
+</ul>
+<p><strong>شهرياً:</strong></p>
+<ul>
+<li>مراجعة إعدادات الأداء</li>
+<li>تحليل إحصائيات الاستخدام</li>
+<li>تحديث كلمات المرور</li>
+<li>مراجعة وتحديث النسخ الاحتياطية</li>
+</ul>
+<hr>
+<p><strong>🎉 تهانينا! نظام Rose Academy جاهز للإنتاج</strong></p>
+<p>هذا الدليل يغطي جميع جوانب الديبلومينت من الصفر حتى النهاية ويضمن حصولك على نظام آمن وعالي الأداء ومجهز للإنتاج الفعلي.</p>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>

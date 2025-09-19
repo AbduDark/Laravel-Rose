@@ -1,0 +1,1069 @@
+
+{
+	"info": {
+		"_postman_id": "12345678-1234-1234-1234-123456789abc",
+		"name": "Rose Academy API Collection",
+		"description": "Complete API collection for Rose Academy with advanced video protection system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "123456"
+	},
+	"item": [
+		{
+			"name": "🚀 System Health",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/health",
+							"host": ["{{base_url}}"],
+							"path": ["health"]
+						}
+					}
+				},
+				{
+					"name": "API Root",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/",
+							"host": ["{{base_url}}"],
+							"path": [""]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "🔐 Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const responseJson = pm.response.json();",
+									"    if (responseJson.data && responseJson.data.token) {",
+									"        pm.environment.set('auth_token', responseJson.data.token);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"أحمد محمد\",\n    \"email\": \"ahmed@example.com\",\n    \"password\": \"password123\",\n    \"password_confirmation\": \"password123\",\n    \"phone\": \"01234567890\",\n    \"gender\": \"male\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "register"]
+						}
+					}
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const responseJson = pm.response.json();",
+									"    if (responseJson.data && responseJson.data.token) {",
+									"        pm.environment.set('auth_token', responseJson.data.token);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"ahmed@example.com\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Get Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/auth/profile",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "profile"]
+						}
+					}
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"أحمد محمد المحدث\",\n    \"phone\": \"01234567891\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/update",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "update"]
+						}
+					}
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"current_password\": \"password123\",\n    \"password\": \"newpassword123\",\n    \"password_confirmation\": \"newpassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/password",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "password"]
+						}
+					}
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/auth/logout",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "logout"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "📚 Courses",
+			"item": [
+				{
+					"name": "Get All Courses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/courses?gender=both&grade=all",
+							"host": ["{{base_url}}"],
+							"path": ["courses"],
+							"query": [
+								{
+									"key": "gender",
+									"value": "both"
+								},
+								{
+									"key": "grade",
+									"value": "all"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Course Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/courses/1",
+							"host": ["{{base_url}}"],
+							"path": ["courses", "1"]
+						}
+					}
+				},
+				{
+					"name": "Get Course Lessons",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/courses/1/lessons",
+							"host": ["{{base_url}}"],
+							"path": ["courses", "1", "lessons"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "📖 Lessons & Videos",
+			"item": [
+				{
+					"name": "Get Lesson Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/lessons/1",
+							"host": ["{{base_url}}"],
+							"path": ["lessons", "1"]
+						}
+					}
+				},
+				{
+					"name": "🎥 Stream Lesson Video",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Range",
+								"value": "bytes=0-1024"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/lessons/1/stream?token={{video_token}}",
+							"host": ["{{base_url}}"],
+							"path": ["lessons", "1", "stream"],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{video_token}}",
+									"description": "Video protection token (required for protected videos)"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "🔐 Refresh Video Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const responseJson = pm.response.json();",
+									"    if (responseJson.data && responseJson.data.token) {",
+									"        pm.environment.set('video_token', responseJson.data.token);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/lessons/1/video/refresh-token",
+							"host": ["{{base_url}}"],
+							"path": ["lessons", "1", "video", "refresh-token"]
+						}
+					}
+				},
+				{
+					"name": "📊 Get Video Processing Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/lessons/1/video/status",
+							"host": ["{{base_url}}"],
+							"path": ["lessons", "1", "video", "status"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "🔔 Notifications",
+			"item": [
+				{
+					"name": "Get All Notifications",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/notifications?page=1&limit=10",
+							"host": ["{{base_url}}"],
+							"path": ["notifications"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Unread Count",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/notifications/unread-count",
+							"host": ["{{base_url}}"],
+							"path": ["notifications", "unread-count"]
+						}
+					}
+				},
+				{
+					"name": "Mark as Read",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/notifications/1/read",
+							"host": ["{{base_url}}"],
+							"path": ["notifications", "1", "read"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "💰 Subscriptions",
+			"item": [
+				{
+					"name": "Subscribe to Course",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"course_id\": 1,\n    \"payment_method\": \"vodafone_cash\",\n    \"phone_number\": \"01234567890\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/subscribe",
+							"host": ["{{base_url}}"],
+							"path": ["subscribe"]
+						}
+					}
+				},
+				{
+					"name": "My Subscriptions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/my-subscriptions",
+							"host": ["{{base_url}}"],
+							"path": ["my-subscriptions"]
+						}
+					}
+				},
+				{
+					"name": "Check Subscription Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/subscriptions/status/1",
+							"host": ["{{base_url}}"],
+							"path": ["subscriptions", "status", "1"]
+						}
+					}
+				},
+				{
+					"name": "Renew Subscription",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"course_id\": 1,\n    \"payment_method\": \"vodafone_cash\",\n    \"phone_number\": \"01234567890\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/subscriptions/renew",
+							"host": ["{{base_url}}"],
+							"path": ["subscriptions", "renew"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "💬 Comments",
+			"item": [
+				{
+					"name": "Get Lesson Comments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/lessons/1/comments",
+							"host": ["{{base_url}}"],
+							"path": ["lessons", "1", "comments"]
+						}
+					}
+				},
+				{
+					"name": "Add Comment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"lesson_id\": 1,\n    \"content\": \"تعليق مفيد على الدرس\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/comments",
+							"host": ["{{base_url}}"],
+							"path": ["comments"]
+						}
+					}
+				},
+				{
+					"name": "My Comments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/my-comments",
+							"host": ["{{base_url}}"],
+							"path": ["my-comments"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "⚙️ Admin Panel",
+			"item": [
+				{
+					"name": "🏠 Dashboard",
+					"item": [
+						{
+							"name": "Dashboard Stats",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/dashboard/stats",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "dashboard", "stats"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "👥 User Management",
+					"item": [
+						{
+							"name": "Get All Users",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/users?page=1&limit=10",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "users"],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										}
+									]
+								}
+							}
+						},
+						{
+							"name": "Get User Details",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/users/1",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "users", "1"]
+								}
+							}
+						},
+						{
+							"name": "Update User",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"اسم المستخدم المحدث\",\n    \"email\": \"updated@example.com\",\n    \"is_active\": true\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/users/1",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "users", "1"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "📚 Course Management",
+					"item": [
+						{
+							"name": "Create Course",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"دورة جديدة\",\n    \"description\": \"وصف الدورة\",\n    \"price\": 100,\n    \"duration_hours\": 20,\n    \"target_gender\": \"both\",\n    \"grade\": \"secondary\",\n    \"is_active\": true\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/courses",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "courses"]
+								}
+							}
+						},
+						{
+							"name": "Update Course",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"دورة محدثة\",\n    \"description\": \"وصف محدث\",\n    \"price\": 150\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/courses/1",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "courses", "1"]
+								}
+							}
+						},
+						{
+							"name": "Delete Course",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/courses/1",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "courses", "1"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "📖 Lesson Management",
+					"item": [
+						{
+							"name": "Get All Lessons (Admin)",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/lessons?course_id=1",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "lessons"],
+									"query": [
+										{
+											"key": "course_id",
+											"value": "1"
+										}
+									]
+								}
+							}
+						},
+						{
+							"name": "Create Lesson",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"course_id\": 1,\n    \"title\": \"درس جديد\",\n    \"description\": \"وصف الدرس\",\n    \"content\": \"محتوى الدرس\",\n    \"order\": 1,\n    \"duration_minutes\": 60,\n    \"is_free\": false,\n    \"target_gender\": \"both\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/lessons",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "lessons"]
+								}
+							}
+						},
+						{
+							"name": "Update Lesson",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"درس محدث\",\n    \"description\": \"وصف محدث\",\n    \"duration_minutes\": 90\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/lessons/1",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "lessons", "1"]
+								}
+							}
+						},
+						{
+							"name": "Delete Lesson",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/lessons/1",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "lessons", "1"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "🎥 Video Management",
+					"item": [
+						{
+							"name": "Upload Video to Lesson",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "video",
+											"type": "file",
+											"src": "/path/to/video.mp4",
+											"description": "Video file (MP4, MOV, AVI, WMV, WebM - Max 2GB)"
+										},
+										{
+											"key": "is_protected",
+											"value": "true",
+											"type": "text",
+											"description": "Enable video protection (true/false)"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/lessons/1/video/upload",
+									"host": ["{{base_url}}"],
+									"path": ["lessons", "1", "video", "upload"]
+								}
+							}
+						},
+						{
+							"name": "Get Video Processing Status (Admin)",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/lessons/1/video/status",
+									"host": ["{{base_url}}"],
+									"path": ["lessons", "1", "video", "status"]
+								}
+							}
+						},
+						{
+							"name": "Get Video Info",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/lessons/1/video/info",
+									"host": ["{{base_url}}"],
+									"path": ["lessons", "1", "video", "info"]
+								}
+							}
+						},
+						{
+							"name": "Delete Video",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/lessons/1/video",
+									"host": ["{{base_url}}"],
+									"path": ["lessons", "1", "video"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "💰 Subscription Management",
+					"item": [
+						{
+							"name": "Get All Subscriptions",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/subscriptions?status=pending&page=1&limit=10",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "subscriptions"],
+									"query": [
+										{
+											"key": "status",
+											"value": "pending"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										}
+									]
+								}
+							}
+						},
+						{
+							"name": "Get Pending Subscriptions",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/subscriptions/pending",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "subscriptions", "pending"]
+								}
+							}
+						},
+						{
+							"name": "Approve Subscription",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/subscriptions/1/approve",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "subscriptions", "1", "approve"]
+								}
+							}
+						},
+						{
+							"name": "Reject Subscription",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"reason\": \"سبب الرفض\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/subscriptions/1/reject",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "subscriptions", "1", "reject"]
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://your-repl-name.username.repl.co/api",
+			"type": "string"
+		},
+		{
+			"key": "auth_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "video_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
