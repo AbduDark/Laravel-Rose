@@ -28,7 +28,7 @@ return [
     'allowed_origins_patterns' => [],
 
     // الهيدرز المسموح بيها
-    'allowed_headers' => ['*'],
+    'allowed_headers' => ['*', 'Range', 'Content-Range'],
 
     // الهيدرز اللي ممكن تظهر للـ Frontend
     'exposed_headers' => [],

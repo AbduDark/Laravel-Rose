@@ -295,6 +295,14 @@ public function upload(Request $request, $lessonId)
             return $this->errorResponse('خطأ في بث الفيديو', 500);
         }
     }
+
+    /**
+     * Alternative method name for compatibility
+     */
+    public function stream(Request $request, Lesson $lesson)
+    {
+        return $this->streamVideo($request, $lesson);
+    }
     /**
      * حالة معالجة الفيديو
      */

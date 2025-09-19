@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage as StorageBase;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\URL;
+
 class Lesson extends Model
 {
     use HasFactory;
@@ -58,7 +59,7 @@ class Lesson extends Model
     }
 
     /**
-     * التحقق من توفر الفيديو
+     * Check if lesson has video
      */
     public function hasVideo(): bool
     {
@@ -66,7 +67,22 @@ class Lesson extends Model
     }
 
     /**
-     * التحقق من صحة رمز الفيديو
+     * Generate video token for protected videos
+     */
+    public function generateVideoToken(int $expiresInMinutes = 60): string
+    {
+        $token = Str::random(64);
+
+        $this->update([
+            'video_token' => $token,
+            'video_token_expires_at' => now()->addMinutes($expiresInMinutes)
+        ]);
+
+        return $token;
+    }
+
+    /**
+     * Validate video token
      */
     public function isValidVideoToken(string $token): bool
     {
@@ -80,18 +96,35 @@ class Lesson extends Model
     }
 
     /**
-     * إنشاء رمز حماية جديد للفيديو
+     * Get video stream URL
      */
-    public function generateVideoToken(int $expiresInMinutes = 60): string
+    public function getVideoStreamUrl(): ?string
     {
-        $token = Str::random(64);
+        if (!$this->hasVideo()) {
+            return null;
+        }
 
-        $this->update([
-            'video_token' => $token,
-            'video_token_expires_at' => now()->addMinutes($expiresInMinutes)
-        ]);
+        if (!$this->is_video_protected) {
+            return url("/api/lessons/{$this->id}/stream");
+        }
 
-        return $token;
+        // إنشاء رمز حماية جديد صالح لمدة ساعة
+        $token = $this->generateVideoToken(60);
+
+        return url("/api/lessons/{$this->id}/stream?token={$token}");
+    }
+
+    /**
+     * Get video status message
+     */
+    public function getVideoStatusMessage(): string
+    {
+        return match($this->video_status) {
+            'processing' => 'جاري معالجة الفيديو...',
+            'ready' => 'الفيديو جاهز للمشاهدة',
+            'failed' => 'فشل في معالجة الفيديو',
+            default => 'لم يتم رفع الفيديو'
+        };
     }
 
     /**
@@ -113,25 +146,6 @@ class Lesson extends Model
     }
 
     /**
-     * الحصول على رابط بث الفيديو
-     */
-    public function getVideoStreamUrl(): ?string
-    {
-        if (!$this->hasVideo()) {
-            return null;
-        }
-
-        if (!$this->is_video_protected) {
-            return url("/api/lessons/{$this->id}/stream");
-        }
-
-        // إنشاء رمز حماية جديد صالح لمدة ساعة
-        $token = $this->generateVideoToken(60);
-
-        return url("/api/lessons/{$this->id}/stream?token={$token}");
-    }
-
-    /**
      * التحقق من حالة معالجة الفيديو
      */
     public function isVideoProcessing(): bool
@@ -145,19 +159,6 @@ class Lesson extends Model
     public function isVideoFailed(): bool
     {
         return $this->video_status === 'failed';
-    }
-
-    /**
-     * الحصول على رسالة حالة الفيديو
-     */
-    public function getVideoStatusMessage(): string
-    {
-        return match($this->video_status) {
-            'processing' => 'جاري معالجة الفيديو...',
-            'ready' => 'الفيديو جاهز للمشاهدة',
-            'failed' => 'فشل في معالجة الفيديو',
-            default => 'لم يتم رفع الفيديو'
-        };
     }
 
     /**
